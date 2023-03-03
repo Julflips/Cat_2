@@ -34,10 +34,8 @@ public class CatBehaviour : MonoBehaviour
     {
         if (Time.timeSinceLevelLoad - lastTimeZoomed >= zoomieCheck)
         {
-            Debug.Log("Check for Zoom" + zoomin);
             if (zoomin)
             {
-                Debug.Log("ZOOOMING");
                 Vector2 direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
                 rigi.AddForce(direction * strength * 2);
                 zoomed++;
@@ -91,6 +89,12 @@ public class CatBehaviour : MonoBehaviour
 
                     direction.Normalize();
                     rigi.AddForce(-direction * strength);
+                }
+                else
+                {
+                    //random walk
+                    Vector2 direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                    rigi.AddForce(direction * strength/2);
                 }
             }
             
