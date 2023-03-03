@@ -5,8 +5,8 @@ using UnityEngine;
 public class Fence : MonoBehaviour
 {
 
-    public Vector2 a;
-    public Vector2 b;
+    public GameObject followA;
+    public GameObject followB;
 
     // Start is called before the first frame update
     void Start()
@@ -17,11 +17,20 @@ public class Fence : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Position();
+        if (followA && followB)
+        {
+            Stretch(followA.transform.position, followB.transform.position);
+        }
+        
     }
 
-    void Position()
+    public void Stretch(Vector2 a, Vector2 b)
     {
+        if (a.Equals(b))
+        {
+            return;
+        }
+
         transform.position = new Vector2((a.x + b.x) / 2, (a.y + b.y) / 2);
         transform.localScale = new Vector3(transform.localScale.x, (a - b).magnitude, transform.localScale.z); //ugly
         //Debug.Log(AngleTo(a, b));
