@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4679394502053288825}
   m_Layer: 0
   m_Name: fence
-  m_TagString: Untagged
+  m_TagString: Fence
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4679394502053288805}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.53, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a619e45e2d41193459b644803608c512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followA: {fileID: 0}
-  followB: {fileID: 0}
+  followOldPost: {fileID: 0}
+  followPlayer: {fileID: 0}
 --- !u!61 &4679394502053288825
 BoxCollider2D:
   m_ObjectHideFlags: 0

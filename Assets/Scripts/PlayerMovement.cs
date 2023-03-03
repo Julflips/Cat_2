@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
 
     private GameObject connected;
 
+    private GameObject sketch;
+
     public float speed;
 
     public GameObject fencePostPre;
@@ -30,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         postFilter = new ContactFilter2D();
-        postFilter.layerMask = LayerMask.GetMask("PostFence");
+        postFilter.SetLayerMask(LayerMask.GetMask("FencePost"));
         connected = null;
     }
 
@@ -47,6 +49,10 @@ public class PlayerMovement : MonoBehaviour
         {
             PlaceFence();
         }
+        if (Input.GetButtonDown("Abort"))
+        {
+            AbortFence();
+        }
     }
 
     private void FixedUpdate()
@@ -54,31 +60,59 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(input * speed);
     }
 
+    public void AbortFence()
+    {
+        if (connected)
+        {
+            connected = null;
+            Destroy(sketch);
+        }
+    }
+
     private void PlaceFence()
     {
         if (!connected)
         {
-            
             Collider2D[] result = new Collider2D[1];
-            GameObject post;
             if (col.OverlapCollider(postFilter, result) > 0)
             {
-                Debug.Log("connecting to");
-                post = result[0].gameObject;
+                Debug.Log("new connection to existing");
+                connected = result[0].gameObject;
             }
             else
             {
-                Debug.Log("placing first");
-                post = Instantiate(fencePostPre, transform.position, Quaternion.Euler(Vector3.zero));
+                Debug.Log("new connection to new");
+                connected = Instantiate(fencePostPre, transform.position, Quaternion.Euler(Vector3.zero));
             }
-            connected = post;
-            GameObject sketch = Instantiate(fenceSketchPre);
-            sketch.GetComponent<Fence>().followA = gameObject;
-            sketch.GetComponent<Fence>().followB = post;
+            sketch = Instantiate(fenceSketchPre);
+            sketch.GetComponent<Fence>().followPlayer = gameObject;
+            sketch.GetComponent<Fence>().followOldPost = connected;
         }
         else
         {
-
+            Destroy(sketch);
+            sketch = null;
+            Vector3 a = connected.transform.position;
+            GameObject fence = Instantiate(fencePre);
+            
+            Collider2D[] result = new Collider2D[1];
+            if (col.OverlapCollider(postFilter, result) > 0)
+            {
+                Debug.Log("continue connection to existing");
+                connected = null;
+                fence.GetComponent<Fence>().Stretch(a, result[0].transform.position);
+            }
+            else
+            {
+                Debug.Log("contine connection to new");
+                connected = Instantiate(fencePostPre, transform.position, Quaternion.Euler(Vector3.zero));
+                fence.GetComponent<Fence>().Stretch(a, connected.transform.position);
+                sketch = Instantiate(fenceSketchPre);
+                sketch.GetComponent<Fence>().followPlayer = gameObject;
+                sketch.GetComponent<Fence>().followOldPost = connected;
+            }
         }
     }
+
+
 }
