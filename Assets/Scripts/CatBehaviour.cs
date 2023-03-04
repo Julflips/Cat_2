@@ -47,7 +47,7 @@ public class CatBehaviour : MonoBehaviour
     
     void Update()
     {
-        Debug.Log("Zooming: " + zoomin + "   Sitting: " + sitting);
+        //Debug.Log("Zooming: " + zoomin + "   Sitting: " + sitting);
         if (sitting && Time.timeSinceLevelLoad - startedSitting >= sittingDuration)
         {
             sitting = false;
