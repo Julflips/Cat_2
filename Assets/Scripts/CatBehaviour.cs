@@ -13,6 +13,7 @@ public class CatBehaviour : MonoBehaviour
     public float foodDetectionRange;
     public float zoomieProp;
     public int zoomieLength;
+    public int type;
 
     private float lastTimeMoved = 0;
     private Rigidbody2D rigi;
@@ -28,6 +29,7 @@ public class CatBehaviour : MonoBehaviour
     void Start()
     {
         rigi = GetComponent<Rigidbody2D>();
+        //Change Sprite according to type
     }
     
     void Update()
