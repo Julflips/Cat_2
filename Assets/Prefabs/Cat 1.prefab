@@ -108,8 +108,11 @@ MonoBehaviour:
   playerWeight: 1
   foodDetectionRange: 10
   zoomieProp: 0.05
+  sittingProp: 0.1
+  sittingDuration: 2
   zoomieLength: 5
   type: 0
+  animator: {fileID: 0}
 --- !u!50 &1618015647489859713
 Rigidbody2D:
   serializedVersion: 4
