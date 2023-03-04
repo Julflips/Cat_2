@@ -37,7 +37,14 @@ public class FenceManager : MonoBehaviour
         {
             Collider2D[] results = new Collider2D[100];
             col.OverlapCollider(catFilter, results);
-            cols.AddRange(results);
+            for (int i = 0; i < results.Length; i++)
+            {
+                if (results[i])
+                {
+                    cols.Add(results[0]);
+                }
+                else { break; }
+            }
         }
         List<GameObject> cats = new List<GameObject>();
         foreach (Collider2D col in cols)
