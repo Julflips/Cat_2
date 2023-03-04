@@ -51,9 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
         animator.SetFloat("horizontal_speed", rb.velocity.x*1000);
         animator.SetFloat("vertical_speed", rb.velocity.y*1000);
-        
-        Debug.Log(rb.velocity.x*1000);
-        
+
         if (Input.GetButtonDown("Place"))
         {
             PlaceFence();

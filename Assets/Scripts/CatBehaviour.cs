@@ -26,6 +26,8 @@ public class CatBehaviour : MonoBehaviour
     private bool zoomin = false;
     private int zoomed = 0;
 
+    public Animator animator;
+
     void Start()
     {
         rigi = GetComponent<Rigidbody2D>();
@@ -101,6 +103,10 @@ public class CatBehaviour : MonoBehaviour
             }
             
             lastTimeMoved = Time.timeSinceLevelLoad;
+            
+            animator.SetBool("zoomin", zoomin);
+            animator.SetFloat("vertical_speed", rigi.velocity.y);
+            animator.SetFloat("horizontal_speed", rigi.velocity.x);
         }
     }
 
