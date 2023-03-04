@@ -107,8 +107,8 @@ MonoBehaviour:
   fenceDetectionRange: 5
   playerWeight: 1
   foodDetectionRange: 10
-  zoomieProp: 0
-  sittingProp: 0
+  zoomieProp: 0.05
+  sittingProp: 0.1
   sittingDuration: 4
   zoomieLength: 6
   zoomieStregth: 2000
