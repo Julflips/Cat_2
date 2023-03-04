@@ -22,11 +22,12 @@ public class PlayerMovement : MonoBehaviour
     public GameObject FenceManager;
     private FenceManager fm;
 
-    public Animator animator;
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         fm = FenceManager.GetComponent<FenceManager>();

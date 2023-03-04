@@ -106,8 +106,16 @@ public class CatBehaviour : MonoBehaviour
             lastTimeMoved = Time.timeSinceLevelLoad;
             
             animator.SetBool("zoomin", zoomin);
-            animator.SetFloat("vertical_speed", rigi.velocity.y*10000);
-            animator.SetFloat("horizontal_speed", rigi.velocity.x*10000);
+            if (rigi.velocity.y > rigi.velocity.x)
+            {
+                animator.SetFloat("vertical_speed", rigi.velocity.y*10000);
+                animator.SetFloat("horizontal_speed", 0);
+            }
+            else
+            {   
+                animator.SetFloat("horizontal_speed", rigi.velocity.x*10000);
+                animator.SetFloat("vertical_speed", 0);
+            }
         }
     }
 
