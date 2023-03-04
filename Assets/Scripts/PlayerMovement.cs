@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject FenceManager;
     private FenceManager fm;
 
-
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -35,17 +35,25 @@ public class PlayerMovement : MonoBehaviour
         connected = null;
     }
 
+    void FixedUpdate()
+    {
+        rb.AddForce(input * (speed * Time.fixedDeltaTime));
+    }
+    
     // Update is called once per frame
     void Update()
     {
-        input.x = Input.GetAxisRaw("Horizontal") * Time.deltaTime;
-        input.y = Input.GetAxisRaw("Vertical") * Time.deltaTime;
+        input.x = Input.GetAxisRaw("Horizontal");
+        input.y = Input.GetAxisRaw("Vertical");
         if (input.magnitude > 1){
             input.Normalize();
         }
-        rb.AddForce(input * speed);
 
-
+        animator.SetFloat("horizontal_speed", rb.velocity.x*1000);
+        animator.SetFloat("vertical_speed", rb.velocity.y*1000);
+        
+        Debug.Log(rb.velocity.x*1000);
+        
         if (Input.GetButtonDown("Place"))
         {
             PlaceFence();
@@ -54,11 +62,6 @@ public class PlayerMovement : MonoBehaviour
         {
             AbortFence();
         }
-    }
-
-    private void FixedUpdate()
-    {
-        
     }
 
     public void AbortFence()
