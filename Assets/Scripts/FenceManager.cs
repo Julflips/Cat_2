@@ -7,29 +7,67 @@ public class FenceManager : MonoBehaviour
 
     public List<FencePost> vertices;
     public GameObject PolygonPre;
+
+    public List<GameObject> capturedCats;
+
+    private ContactFilter2D catFilter;
     // Start is called before the first frame update
     void Start()
     {
-
+        catFilter = new ContactFilter2D();
+        catFilter.SetLayerMask(LayerMask.GetMask("Cat"));
+        capturedCats = new List<GameObject>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Submit"))
-        {
-            foreach (Transform child in transform)
-            {
-                Destroy(child.gameObject);
-            }
-            foreach (List<FencePost> circle in GetCircles())
-            {
-                createPolygon(circle);
-            }
-        }
+
     }
 
-    public GameObject createPolygon(List<FencePost> circle)
+    public void UpdateCats()
+    {
+        capturedCats = GetCapturedCats();
+        Debug.Log(capturedCats.Count);
+    }
+
+    private List<GameObject> GetCapturedCats() {
+        List<Collider2D> cols = new List<Collider2D>();
+        foreach (PolygonCollider2D col in createColliders())
+        {
+            Collider2D[] results = new Collider2D[100];
+            col.OverlapCollider(catFilter, results);
+            cols.AddRange(results);
+        }
+        List<GameObject> cats = new List<GameObject>();
+        foreach (Collider2D col in cols)
+        {
+            if (!cats.Contains(col.gameObject))
+            {
+                cats.Add(col.gameObject);
+            }
+        }
+        return cats;
+    }
+
+    private List<PolygonCollider2D> createColliders()
+    {
+        List<PolygonCollider2D> results = new List<PolygonCollider2D>();
+
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (List<FencePost> circle in GetCircles())
+        {
+            results.Add(createPolygon(circle).GetComponent<PolygonCollider2D>());
+        }
+
+        return results;
+
+    }
+
+    private GameObject createPolygon(List<FencePost> circle)
     {
         
         Vector2[] points = new Vector2[circle.Count];
@@ -56,7 +94,7 @@ public class FenceManager : MonoBehaviour
 
 
 
-    public List<List<FencePost>> GetCircles()
+    private List<List<FencePost>> GetCircles()
     {
         List<FencePost> virginVertices = new List<FencePost>();
         foreach(FencePost v in vertices)

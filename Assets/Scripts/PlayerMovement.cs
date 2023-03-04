@@ -80,12 +80,12 @@ public class PlayerMovement : MonoBehaviour
             Collider2D[] result = new Collider2D[1];
             if (col.OverlapCollider(postFilter, result) > 0)
             {
-                Debug.Log("new connection to existing");
+                //Debug.Log("new connection to existing");
                 connected = result[0].gameObject;
             }
             else
             {
-                Debug.Log("new connection to new");
+                //Debug.Log("new connection to new");
                 connected = Instantiate(fencePostPre, transform.position, Quaternion.Euler(Vector3.zero));
                 fm.vertices.Add(connected.GetComponent<FencePost>());
             }
@@ -109,19 +109,20 @@ public class PlayerMovement : MonoBehaviour
 
                 if (result[0].gameObject != oldPost)
                 {
-                    Debug.Log("continue connection to existing");
+                    //Debug.Log("continue connection to existing");
                     fence.GetComponent<Fence>().Stretch(oldPost, result[0].gameObject);
                     oldPost.GetComponent<FencePost>().connectedFences.Add(fence);
                     result[0].GetComponent<FencePost>().connectedFences.Add(fence);
+                    fm.UpdateCats();
                 }
                 else { 
-                    Debug.Log("not connecting to self");
+                    //Debug.Log("not connecting to self");
                     Destroy(fence);
                 }
             }
             else
             {
-                Debug.Log("contine connection to new");
+                //Debug.Log("contine connection to new");
                 connected = Instantiate(fencePostPre, transform.position, Quaternion.Euler(Vector3.zero));
                 fm.vertices.Add(connected.GetComponent<FencePost>());
                 fence.GetComponent<Fence>().Stretch(oldPost, connected);
@@ -130,6 +131,7 @@ public class PlayerMovement : MonoBehaviour
                 sketch.GetComponent<Fence>().followOldPost = connected;
                 oldPost.GetComponent<FencePost>().connectedFences.Add(fence);
                 connected.GetComponent<FencePost>().connectedFences.Add(fence);
+                fm.UpdateCats();
             }
         }
     }

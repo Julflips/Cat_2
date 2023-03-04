@@ -6326,15 +6326,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ca83b4ff8aa8e246b97ca0e26bc049f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  areaX: 10
-  areaY: 10
-  numberOfCats: 15
+  areaX: 1
+  areaY: 1
+  numberOfCats: 1
   prefabCats:
   - {fileID: 2028202310020884654, guid: d6880c1557c2aea4792f481388d77322, type: 3}
-  - {fileID: 2028202310020884654, guid: 7bac82db1b56356449b207b3a77182f7, type: 3}
-  - {fileID: 2028202310020884654, guid: 13368a69f5844d748b3350bb2e2d1605, type: 3}
-  - {fileID: 2028202310020884654, guid: 1ac794906b228264b88880fb330eb2be, type: 3}
-  - {fileID: 2028202310020884654, guid: b1533070fc19ded478ecfb6d0ea50e0a, type: 3}
+  - {fileID: 2028202310020884654, guid: d6880c1557c2aea4792f481388d77322, type: 3}
+  - {fileID: 2028202310020884654, guid: d6880c1557c2aea4792f481388d77322, type: 3}
+  - {fileID: 2028202310020884654, guid: d6880c1557c2aea4792f481388d77322, type: 3}
+  - {fileID: 2028202310020884654, guid: d6880c1557c2aea4792f481388d77322, type: 3}
   player: {fileID: 124559045}
   cats: []
 --- !u!4 &963888191
