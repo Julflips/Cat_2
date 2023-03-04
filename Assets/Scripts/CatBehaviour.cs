@@ -15,6 +15,7 @@ public class CatBehaviour : MonoBehaviour
     public float sittingProp;
     public int sittingDuration;
     public int zoomieLength;
+    public int zoomieStregth;
     public int type;
 
     private float lastTimeMoved = 0;
@@ -29,6 +30,9 @@ public class CatBehaviour : MonoBehaviour
     private int zoomed = 0;
     private bool sitting;
     private float startedSitting;
+    private bool walking;
+    private float startedWalking;
+    private Vector2 direction = new Vector2();
     
 
     private Animator animator;
@@ -42,6 +46,7 @@ public class CatBehaviour : MonoBehaviour
     
     void Update()
     {
+        Debug.Log("Zooming: " + zoomin + "   Sitting: " + sitting);
         if (sitting && Time.timeSinceLevelLoad - startedSitting >= sittingDuration)
         {
             sitting = false;
@@ -54,7 +59,7 @@ public class CatBehaviour : MonoBehaviour
                 if (zoomin)
                 {
                     Vector2 direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-                    rigi.AddForce(direction * strength * 2);
+                    rigi.AddForce(direction * zoomieStregth);
                     zoomed++;
                     if (zoomed >= zoomieLength)
                     {
@@ -94,19 +99,19 @@ public class CatBehaviour : MonoBehaviour
                     food = vec;
                 }
             }
-
             if (getFood)
             {
-                Vector2 direction = food - (Vector2)transform.position;
+                //walk to food
+                direction = food - (Vector2)transform.position;
                 direction.Normalize();
-                rigi.AddForce(direction * strength);
+                //rigi.AddForce(direction * strength);
             }
             else
             {
                 if (Vector2.Distance(player.transform.position, transform.position) <= playerDetectionRange)
                 {
-                    //Debug.Log("Move");
-                    Vector2 direction = (player.transform.position - transform.position) * playerWeight;
+                    //walk away from player
+                    direction = (player.transform.position - transform.position) * playerWeight;
                     foreach (Vector2 vec in posts)
                     {
                         if (Vector2.Distance(vec, transform.position) <= fenceDetectionRange)
@@ -115,14 +120,15 @@ public class CatBehaviour : MonoBehaviour
                         }
                     }
 
+                    direction = -direction;
                     direction.Normalize();
-                    rigi.AddForce(-direction * strength);
+                    //rigi.AddForce(-direction * strength);
                 }
                 else
                 {
                     //random walk
-                    Vector2 direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-                    rigi.AddForce(direction * strength/2);
+                    direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                    //rigi.AddForce(direction * strength/2);
                 }
             }
             
@@ -140,6 +146,14 @@ public class CatBehaviour : MonoBehaviour
                 animator.SetFloat("vertical_speed", 0);
             }
         }
+        else
+        {
+            if (!(direction.x == 0 && direction.y == 0))
+            {
+                rigi.AddForce(direction * (strength * Time.deltaTime));
+            }
+        }
+        
     }
 
     public void addPost(Vector2 pos)
