@@ -323,7 +323,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &263518892
 GameObject:
@@ -511,6 +511,7 @@ GameObject:
   - component: {fileID: 330528262}
   - component: {fileID: 330528264}
   - component: {fileID: 330528263}
+  - component: {fileID: 330528265}
   m_Layer: 0
   m_Name: Cages
   m_TagString: Untagged
@@ -1265,6 +1266,22 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &330528265
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330528261}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
 --- !u!1 &353576637
 GameObject:
   m_ObjectHideFlags: 0
@@ -1341,7 +1358,7 @@ Transform:
   - {fileID: 1430232489}
   - {fileID: 330528262}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &390747888
 GameObject:
@@ -6010,6 +6027,49 @@ MonoBehaviour:
   breedCamera: {fileID: 1462662850}
   breedUI: {fileID: 400710845}
   player: {fileID: 1937313366}
+  prefabCats:
+  - {fileID: 2028202310020884654, guid: d6880c1557c2aea4792f481388d77322, type: 3}
+  - {fileID: 2028202310020884654, guid: 7bac82db1b56356449b207b3a77182f7, type: 3}
+  - {fileID: 2028202310020884654, guid: 13368a69f5844d748b3350bb2e2d1605, type: 3}
+  - {fileID: 2028202310020884654, guid: 1ac794906b228264b88880fb330eb2be, type: 3}
+  - {fileID: 2028202310020884654, guid: b1533070fc19ded478ecfb6d0ea50e0a, type: 3}
+  coolCatPodest: {fileID: 1133208820}
+--- !u!1 &1133208819
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1133208820}
+  m_Layer: 5
+  m_Name: CoolCatPodest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1133208820
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133208819}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.4172916, y: 0.4172916, z: 0.4172916}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 5.47, y: -3.1}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1252261642
 GameObject:
   m_ObjectHideFlags: 0
@@ -6719,7 +6779,7 @@ RectTransform:
   - {fileID: 2031871084}
   - {fileID: 400710846}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6946,7 +7006,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1444852345}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 963888192}
+        m_TargetAssemblyTypeName: Breeding, Assembly-CSharp
+        m_MethodName: sellCage
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1444852345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7286,7 +7358,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1479842670}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 963888192}
+        m_TargetAssemblyTypeName: Breeding, Assembly-CSharp
+        m_MethodName: sellCage
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1479842670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7932,7 +8016,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1988606946}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 963888192}
+        m_TargetAssemblyTypeName: Breeding, Assembly-CSharp
+        m_MethodName: sellCage
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1988606946
 MonoBehaviour:
   m_ObjectHideFlags: 0
