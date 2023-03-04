@@ -25,6 +25,11 @@ public class Breeding : MonoBehaviour
     public List<int> expensiveCats;
     public GameObject phase1;
     public GameObject phase2;
+    public Transform catPodest;
+    public GameObject mainCamera;
+    public GameObject breedCamera;
+    public GameObject breedUI;
+    public GameObject player;
 
     private List<GameObject> cage1 = new List<GameObject>();
     private List<GameObject> cage2 = new List<GameObject>();
@@ -47,13 +52,21 @@ public class Breeding : MonoBehaviour
 
     public void onStartPhase(List<GameObject> caughtCats)
     {
+        //foreach (GameObject cat in caughtCats)
+        //{
+            //cat.SetActive(false);
+        //}
+        player.SetActive(false);
+        breedUI.SetActive(true);
+        mainCamera.SetActive(false);
+        breedCamera.SetActive(true);
         playMap.SetActive(false);
-        breedingMap.SetActive(false);
+        breedingMap.SetActive(true);
         cats = caughtCats;
         phase1.SetActive(true);
-        phase2.SetActive(true);
-        expensiveCats.RemoveAt(0);
+        phase2.SetActive(false);
         expensiveCats.Add(Random.Range(0,catPrices.Count));
+        expensiveCats.RemoveAt(0);
         nextCat();
     }
 
@@ -62,19 +75,20 @@ public class Breeding : MonoBehaviour
         index++;
         if (index >= cats.Count)
         {
-            phase1.SetActive(false);
-            phase2.SetActive(false);
+            finished();
         }
         aktCat = cats[index];
-        //Change cat shown
+        aktCat.SetActive(true);
+        aktCat.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        aktCat.transform.position = catPodest.position;
     }
 
     public void chooseCage(int cage)
     {
+        Debug.Log("Cat to cage: " + cage);
         if (cage == 1)
         {
             aktCat.transform.position = spawn1.position;
-            aktCat.SetActive(true);
             cap1++;
             strCap1.text = cap1 + "/" + maxCagesize;
             if (cap1 == maxCagesize)
@@ -86,7 +100,6 @@ public class Breeding : MonoBehaviour
         if (cage == 2)
         {
             aktCat.transform.position = spawn2.position;
-            aktCat.SetActive(true);
             strCap2.text = cap2 + "/" + maxCagesize;
             if (cap2 == maxCagesize)
             {
@@ -97,7 +110,6 @@ public class Breeding : MonoBehaviour
         if (cage == 3)
         {
             aktCat.transform.position = spawn3.position;
-            aktCat.SetActive(true);
             strCap3.text = cap3 + "/" + maxCagesize;
             if (cap3 == maxCagesize)
             {
@@ -105,6 +117,8 @@ public class Breeding : MonoBehaviour
             }
         }
         
+        aktCat.SetActive(true);
+        aktCat.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         nextCat();
     }
 
@@ -167,6 +181,12 @@ public class Breeding : MonoBehaviour
 
     public void finished()
     {
-        
+        player.SetActive(true);
+        Debug.Log("Finished");
+        breedUI.SetActive(false);
+        mainCamera.SetActive(true);
+        breedCamera.SetActive(false);
+        playMap.SetActive(true);
+        breedingMap.SetActive(false);
     }
 }

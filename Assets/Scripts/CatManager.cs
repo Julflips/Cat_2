@@ -8,7 +8,7 @@ public class CatManager : MonoBehaviour
     public int areaX = 10;
     public int areaY = 5;
     public int numberOfCats;
-    public GameObject cat;
+    public List<GameObject> prefabCats;
     public GameObject player;
     public List<GameObject> cats;
 
@@ -17,10 +17,21 @@ public class CatManager : MonoBehaviour
         //Spawn cats around 0 in a areaX times areaY zone
         for (int i = 0; i < numberOfCats; i++)
         {
-            GameObject tempCat = Instantiate(cat, getRandomPos(areaX, areaY), Quaternion.identity);
+            int randomcat = Random.Range(0, prefabCats.Count);
+            GameObject tempCat = Instantiate(prefabCats[randomcat], getRandomPos(areaX, areaY), Quaternion.identity);
             tempCat.GetComponent<CatBehaviour>().player = player;
             cats.Add(tempCat);
         }
+        //test();
+    }
+
+    private void test()
+    {
+        foreach (GameObject cat in cats)
+        {
+            cat.SetActive(false);
+        }
+        GetComponent<Breeding>().onStartPhase(new List<GameObject>(){cats[0]});
     }
 
     private Vector2 getRandomPos(int x, int y)

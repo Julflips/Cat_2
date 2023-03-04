@@ -168,6 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vertices: []
+  PolygonPre: {fileID: 8430347887857071972, guid: 340cb1fb419c37844bae7dc9e3b19393, type: 3}
 --- !u!1 &662741314
 GameObject:
   m_ObjectHideFlags: 0
