@@ -26,11 +26,12 @@ public class CatBehaviour : MonoBehaviour
     private bool zoomin = false;
     private int zoomed = 0;
 
-    public Animator animator;
+    private Animator animator;
 
     void Start()
     {
         rigi = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         //Change Sprite according to type
     }
     
@@ -105,8 +106,8 @@ public class CatBehaviour : MonoBehaviour
             lastTimeMoved = Time.timeSinceLevelLoad;
             
             animator.SetBool("zoomin", zoomin);
-            animator.SetFloat("vertical_speed", rigi.velocity.y);
-            animator.SetFloat("horizontal_speed", rigi.velocity.x);
+            animator.SetFloat("vertical_speed", rigi.velocity.y*10000);
+            animator.SetFloat("horizontal_speed", rigi.velocity.x*10000);
         }
     }
 
