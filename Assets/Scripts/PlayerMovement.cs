@@ -76,12 +76,12 @@ public class PlayerMovement : MonoBehaviour
             Collider2D[] result = new Collider2D[1];
             if (col.OverlapCollider(postFilter, result) > 0)
             {
-                Debug.Log("new connection to existing");
+                //Debug.Log("new connection to existing");
                 connected = result[0].gameObject;
             }
             else
             {
-                Debug.Log("new connection to new");
+                //Debug.Log("new connection to new");
                 connected = Instantiate(fencePostPre, transform.position, Quaternion.Euler(Vector3.zero));
             }
             sketch = Instantiate(fenceSketchPre);
@@ -92,24 +92,30 @@ public class PlayerMovement : MonoBehaviour
         {
             Destroy(sketch);
             sketch = null;
-            Vector3 a = connected.transform.position;
+            GameObject oldPost = connected;
             GameObject fence = Instantiate(fencePre);
-            
+            oldPost.GetComponent<FencePost>().connectedFences.Add(fence);
+
             Collider2D[] result = new Collider2D[1];
             if (col.OverlapCollider(postFilter, result) > 0)
             {
-                Debug.Log("continue connection to existing");
+                //Debug.Log("continue connection to existing");
                 connected = null;
-                fence.GetComponent<Fence>().Stretch(a, result[0].transform.position);
+                fence.GetComponent<Fence>().Stretch(oldPost.transform.position, result[0].transform.position);
+                
+                result[0].GetComponent<FencePost>().connectedFences.Add(fence);
             }
             else
             {
-                Debug.Log("contine connection to new");
+                //Debug.Log("contine connection to new");
                 connected = Instantiate(fencePostPre, transform.position, Quaternion.Euler(Vector3.zero));
-                fence.GetComponent<Fence>().Stretch(a, connected.transform.position);
+                fence.GetComponent<Fence>().Stretch(oldPost.transform.position, connected.transform.position);
                 sketch = Instantiate(fenceSketchPre);
                 sketch.GetComponent<Fence>().followPlayer = gameObject;
                 sketch.GetComponent<Fence>().followOldPost = connected;
+                Debug.Log(connected.GetComponent<FencePost>().connectedFences.Count);
+                connected.GetComponent<FencePost>().connectedFences.Add(fence);
+                Debug.Log(connected.GetComponent<FencePost>().connectedFences.Count);
             }
         }
     }

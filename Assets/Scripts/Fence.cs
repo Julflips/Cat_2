@@ -11,11 +11,12 @@ public class Fence : MonoBehaviour
 
     private LayerMask noBullshit;
 
+
     // Start is called before the first frame update
     void Start()
     {
         noBullshit = ~LayerMask.GetMask("Player", "FencePost");
-        Debug.Log(noBullshit.value);
+
     }
 
     // Update is called once per frame
@@ -57,24 +58,14 @@ public class Fence : MonoBehaviour
         
         if (followOldPost && followPlayer && ((noBullshit & (1 << collision.gameObject.layer)) != 0))
         {
-            Debug.Log(collision.gameObject);
-            Debug.Log(gameObject);
             if (collision.gameObject.tag.Equals("FenceSketch"))
             {
                 return;
             }
-            ContactPoint2D[] trash = new ContactPoint2D[1];
-            if(collision.gameObject.tag == "Fence")
+            if (followOldPost.GetComponent<FencePost>().connectedFences.Contains(collision.gameObject))
             {
-                int trash2 = collision.GetContacts(trash);
-                Debug.Log(trash2);
-                if (trash2 >= 1 || trash2 == 0)
-                {
-                    Debug.Log("nowo");
-                    return;
-                }
+                return;
             }
-            Debug.Log("uwu");
             followPlayer.GetComponent<PlayerMovement>().AbortFence();
 
         }

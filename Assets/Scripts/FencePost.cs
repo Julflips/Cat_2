@@ -5,6 +5,8 @@ using UnityEngine;
 public class FencePost : MonoBehaviour
 {
     // Start is called before the first frame update
+
+    public List<GameObject> connectedFences;
     void Start()
     {
         
