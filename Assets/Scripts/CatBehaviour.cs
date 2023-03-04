@@ -29,7 +29,7 @@ public class CatBehaviour : MonoBehaviour
     private int zoomed = 0;
     private bool sitting;
     private float startedSitting;
-    
+
 
     private Animator animator;
 

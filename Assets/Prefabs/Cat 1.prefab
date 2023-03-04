@@ -101,9 +101,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  moveCooldown: 2
-  strength: 100
-  playerDetectionRange: 10
+  moveCooldown: 1
+  strength: 1
+  playerDetectionRange: 3
   fenceDetectionRange: 5
   playerWeight: 1
   foodDetectionRange: 10
@@ -112,7 +112,6 @@ MonoBehaviour:
   sittingDuration: 2
   zoomieLength: 5
   type: 0
-  animator: {fileID: 0}
 --- !u!50 &1618015647489859713
 Rigidbody2D:
   serializedVersion: 4
@@ -125,10 +124,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 2
+  m_Mass: 0.0001
+  m_LinearDrag: 500
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1

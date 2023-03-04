@@ -49,7 +49,8 @@ public class PlayerMovement : MonoBehaviour
         if (input.magnitude > 1){
             input.Normalize();
         }
-
+        
+        animator.SetFloat("movement_speedus", speed/10);
         animator.SetFloat("horizontal_speed", rb.velocity.x*1000);
         animator.SetFloat("vertical_speed", rb.velocity.y*1000);
 
