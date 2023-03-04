@@ -12,6 +12,8 @@ public class CatBehaviour : MonoBehaviour
     public float playerWeight;
     public float foodDetectionRange;
     public float zoomieProp;
+    public float sittingProp;
+    public int sittingDuration;
     public int zoomieLength;
     public int type;
 
@@ -21,10 +23,13 @@ public class CatBehaviour : MonoBehaviour
     private List<Vector2> foods = new List<Vector2>();
     private bool getFood = false;
     private Vector2 food;
-    private float zoomieCheck = 0.6f;
-    private float lastTimeZoomed = 0;
+    private float eventCheck = 0.6f;
+    private float lastTimeEvented = 0;
     private bool zoomin = false;
     private int zoomed = 0;
+    private bool sitting;
+    private float startedSitting;
+    
 
     private Animator animator;
 
@@ -37,30 +42,48 @@ public class CatBehaviour : MonoBehaviour
     
     void Update()
     {
-        if (Time.timeSinceLevelLoad - lastTimeZoomed >= zoomieCheck)
+        if (sitting && Time.timeSinceLevelLoad - startedSitting >= sittingDuration)
         {
-            if (zoomin)
-            {
-                Vector2 direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-                rigi.AddForce(direction * strength * 2);
-                zoomed++;
-                if (zoomed >= zoomieLength)
-                {
-                    zoomin = false;
-                    zoomed = 0;
-                }
-            }
-            else
-            {
-                if (Random.value <= zoomieProp)
-                {
-                    zoomin = true;
-                }
-            }
-            
-            lastTimeZoomed = Time.timeSinceLevelLoad;
+            sitting = false;
+            rigi.bodyType = RigidbodyType2D.Dynamic;
         }
-        if (Time.timeSinceLevelLoad - lastTimeMoved >= moveCooldown && !zoomin)
+        if (Time.timeSinceLevelLoad - lastTimeEvented >= eventCheck)
+        {
+            if (!sitting)
+            {
+                if (zoomin)
+                {
+                    Vector2 direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                    rigi.AddForce(direction * strength * 2);
+                    zoomed++;
+                    if (zoomed >= zoomieLength)
+                    {
+                        zoomin = false;
+                        zoomed = 0;
+                    }
+                }
+                else
+                {
+                    if (Random.value <= zoomieProp)
+                    {
+                        zoomin = true;
+                    }
+                    else
+                    {
+                        if (Random.value <= zoomieProp)
+                        {
+                            rigi.velocity = new Vector2();
+                            rigi.bodyType = RigidbodyType2D.Static;
+                            startedSitting = Time.timeSinceLevelLoad;
+                            sitting = true;
+                        }
+                    }
+                }
+            }
+
+            lastTimeEvented = Time.timeSinceLevelLoad;
+        }
+        if (Time.timeSinceLevelLoad - lastTimeMoved >= moveCooldown && !zoomin && !sitting)
         {
             getFood = false;
             foreach (Vector2 vec in foods)

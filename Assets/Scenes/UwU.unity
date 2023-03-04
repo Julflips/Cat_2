@@ -6326,8 +6326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ca83b4ff8aa8e246b97ca0e26bc049f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  areaX: 15
-  areaY: 15
+  areaX: 10
+  areaY: 10
   numberOfCats: 15
   prefabCats:
   - {fileID: 2028202310020884654, guid: d6880c1557c2aea4792f481388d77322, type: 3}
