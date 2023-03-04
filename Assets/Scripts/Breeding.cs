@@ -62,6 +62,7 @@ public class Breeding : MonoBehaviour
             //Debug.Log("cat at: " + tempCat.transform.position);
             realExpensiveCats.Add(tempCat);
             tempOffest += offset;
+            tempCat.SetActive(false);
         }
         strCap1.text = "0/" + maxCagesize;
         strCap2.text = "0/" + maxCagesize;
