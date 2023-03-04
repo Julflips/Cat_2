@@ -31,7 +31,7 @@ public class CatManager : MonoBehaviour
         {
             cat.SetActive(false);
         }
-        GetComponent<Breeding>().onStartPhase(new List<GameObject>(){cats[0]});
+        GetComponent<Breeding>().onStartPhase(cats);
     }
 
     private Vector2 getRandomPos(int x, int y)

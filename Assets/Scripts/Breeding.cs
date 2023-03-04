@@ -30,6 +30,8 @@ public class Breeding : MonoBehaviour
     public GameObject breedCamera;
     public GameObject breedUI;
     public GameObject player;
+    public List<GameObject> prefabCats;
+    public Transform coolCatPodest;
 
     private List<GameObject> cage1 = new List<GameObject>();
     private List<GameObject> cage2 = new List<GameObject>();
@@ -42,11 +44,28 @@ public class Breeding : MonoBehaviour
     private int cap1;
     private int cap2;
     private int cap3;
-    private List<int> catPrices = new List<int>() { 1,2,3};
+    private List<int> catPrices = new List<int>() {1, 2, 3, 4, 5};
+    private List<GameObject> realExpensiveCats = new List<GameObject>();
 
     private void Start()
     {
         expensiveCats = new List<int>{Random.Range(0,catPrices.Count), Random.Range(0,catPrices.Count), Random.Range(0,catPrices.Count)};
+        int offset = 2;
+        int tempOffest = 0;
+        foreach (int type in expensiveCats)
+        {
+            GameObject tempCat = Instantiate(prefabCats[type]);
+            tempCat.GetComponent<CatBehaviour>().player = player;
+            tempCat.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            tempCat.transform.position = coolCatPodest.position;
+            tempCat.transform.position += Vector3.right * tempOffest;
+            //Debug.Log("cat at: " + tempCat.transform.position);
+            realExpensiveCats.Add(tempCat);
+            tempOffest += offset;
+        }
+        strCap1.text = "0/" + maxCagesize;
+        strCap2.text = "0/" + maxCagesize;
+        strCap3.text = "0/" + maxCagesize;
     }
 
 
@@ -75,20 +94,25 @@ public class Breeding : MonoBehaviour
         index++;
         if (index >= cats.Count)
         {
-            finished();
+            phase1.SetActive(false);
+            phase2.SetActive(true);
         }
-        aktCat = cats[index];
-        aktCat.SetActive(true);
-        aktCat.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-        aktCat.transform.position = catPodest.position;
+        else
+        {
+            aktCat = cats[index];
+            aktCat.SetActive(true);
+            aktCat.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            aktCat.transform.position = catPodest.position;
+        }
     }
 
     public void chooseCage(int cage)
     {
-        Debug.Log("Cat to cage: " + cage);
+        //Debug.Log("Cat to cage: " + cage);
         if (cage == 1)
         {
             aktCat.transform.position = spawn1.position;
+            cage1.Add(aktCat);
             cap1++;
             strCap1.text = cap1 + "/" + maxCagesize;
             if (cap1 == maxCagesize)
@@ -100,6 +124,8 @@ public class Breeding : MonoBehaviour
         if (cage == 2)
         {
             aktCat.transform.position = spawn2.position;
+            cage2.Add(aktCat);
+            cap2++;
             strCap2.text = cap2 + "/" + maxCagesize;
             if (cap2 == maxCagesize)
             {
@@ -110,6 +136,8 @@ public class Breeding : MonoBehaviour
         if (cage == 3)
         {
             aktCat.transform.position = spawn3.position;
+            cage3.Add(aktCat);
+            cap3++;
             strCap3.text = cap3 + "/" + maxCagesize;
             if (cap3 == maxCagesize)
             {
@@ -130,8 +158,12 @@ public class Breeding : MonoBehaviour
             {
                 return;
             }
+
+            cap1 = 0;
+            strCap1.text = cap1 + "/" + maxCagesize;
             sellCats(cage1);
             cage1 = new List<GameObject>();
+            add1.GetComponent<Button>().interactable = true;
         }
         if (cage == 2)
         {
@@ -139,8 +171,12 @@ public class Breeding : MonoBehaviour
             {
                 return;
             }
+            
+            cap2 = 0;
+            strCap2.text = cap2 + "/" + maxCagesize;
             sellCats(cage2);
             cage2 = new List<GameObject>();
+            add2.GetComponent<Button>().interactable = true;
         }
         if (cage == 3)
         {
@@ -148,8 +184,12 @@ public class Breeding : MonoBehaviour
             {
                 return;
             }
+            
+            cap3 = 0;
+            strCap3.text = cap3 + "/" + maxCagesize;
             sellCats(cage3);
             cage3 = new List<GameObject>();
+            add3.GetComponent<Button>().interactable = true;
         }
     }
 
@@ -168,6 +208,10 @@ public class Breeding : MonoBehaviour
                 factor = 1;
             }
             stonks += catPrices[cat.GetComponent<CatBehaviour>().type] * factor;
+        }
+        foreach (GameObject cat in slaves)
+        {
+            Destroy(cat);
         }
 
         money += stonks;
