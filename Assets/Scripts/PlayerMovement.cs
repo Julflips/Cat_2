@@ -40,12 +40,11 @@ public class PlayerMovement : MonoBehaviour
     {
         input.x = Input.GetAxisRaw("Horizontal") * Time.deltaTime;
         input.y = Input.GetAxisRaw("Vertical") * Time.deltaTime;
-
-        rb.AddForce(input * speed);
-
         if (input.magnitude > 1){
             input.Normalize();
         }
+        rb.AddForce(input * speed);
+
 
         if (Input.GetButtonDown("Place"))
         {
