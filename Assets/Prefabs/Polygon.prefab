@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8713535116160163352}
   - component: {fileID: 8643272481320138369}
   - component: {fileID: 523812152181539962}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Polygon
   m_TagString: Untagged
   m_Icon: {fileID: 0}

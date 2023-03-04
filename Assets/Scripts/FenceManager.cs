@@ -16,13 +16,24 @@ public class FenceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(GetCircles().Count);
+        if (Input.GetButtonDown("Submit"))
+        {
+            foreach (Transform child in transform)
+            {
+                Destroy(child.gameObject);
+            }
+            foreach (List<FencePost> circle in GetCircles())
+            {
+                createPolygon(circle);
+            }
+        }
     }
 
     public GameObject createPolygon(List<FencePost> circle)
     {
+        
         Vector2[] points = new Vector2[circle.Count];
-        Vector3[] positions = new Vector3[circle.Count];
+        Vector3[] positions = new Vector3[circle.Count + 1];
         int i = 0;
         foreach (FencePost p in circle)
         {
@@ -30,11 +41,13 @@ public class FenceManager : MonoBehaviour
             positions[i] = p.transform.position;
             i++;
         }
+        positions[circle.Count] = positions[0];
 
         GameObject go = Instantiate(PolygonPre, transform, true);
         LineRenderer lr = go.GetComponent<LineRenderer>();
         PolygonCollider2D pc = go.GetComponent<PolygonCollider2D>();
         pc.points = points;
+        lr.positionCount = positions.Length;
         lr.SetPositions(positions);
 
 

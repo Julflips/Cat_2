@@ -38,12 +38,16 @@ public class Fence : MonoBehaviour
         Vector2 b = p2.transform.position;
         post1 = p1.GetComponent<FencePost>();
         post2 = p2.GetComponent<FencePost>();
-
-        if (a.Equals(b))
+        if(p1 == p2)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        if(a == b)
         {
             return;
         }
-
+        
         transform.position = new Vector2((a.x + b.x) / 2, (a.y + b.y) / 2);
         transform.localScale = new Vector3(transform.localScale.x, (a - b).magnitude, transform.localScale.z); //ugly
 
