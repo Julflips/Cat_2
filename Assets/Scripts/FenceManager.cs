@@ -6,6 +6,7 @@ public class FenceManager : MonoBehaviour
 {
 
     public List<FencePost> vertices;
+    public GameObject PolygonPre;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +17,28 @@ public class FenceManager : MonoBehaviour
     void Update()
     {
         //Debug.Log(GetCircles().Count);
+    }
+
+    public GameObject createPolygon(List<FencePost> circle)
+    {
+        Vector2[] points = new Vector2[circle.Count];
+        Vector3[] positions = new Vector3[circle.Count];
+        int i = 0;
+        foreach (FencePost p in circle)
+        {
+            points[i] = p.transform.position;
+            positions[i] = p.transform.position;
+            i++;
+        }
+
+        GameObject go = Instantiate(PolygonPre, transform, true);
+        LineRenderer lr = go.GetComponent<LineRenderer>();
+        PolygonCollider2D pc = go.GetComponent<PolygonCollider2D>();
+        pc.points = points;
+        lr.SetPositions(positions);
+
+
+        return go;
     }
 
 
