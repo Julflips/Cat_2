@@ -5,24 +5,22 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
-
     private Collider2D col;
-
     private ContactFilter2D postFilter;
 
     private Vector2 input;
 
     private GameObject connected;
-
     private GameObject sketch;
 
     public float speed;
 
     public GameObject fencePostPre;
-
     public GameObject fencePre;
-
     public GameObject fenceSketchPre;
+
+    public GameObject FenceManager;
+    private FenceManager fm;
 
 
 
@@ -31,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
+        fm = FenceManager.GetComponent<FenceManager>();
         postFilter = new ContactFilter2D();
         postFilter.SetLayerMask(LayerMask.GetMask("FencePost"));
         connected = null;
@@ -39,8 +38,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        input.x = Input.GetAxisRaw("Horizontal");
-        input.y = Input.GetAxisRaw("Vertical");
+        input.x = Input.GetAxisRaw("Horizontal") * Time.deltaTime;
+        input.y = Input.GetAxisRaw("Vertical") * Time.deltaTime;
+
+        rb.AddForce(input * speed);
+
         if (input.magnitude > 1){
             input.Normalize();
         }
@@ -57,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.AddForce(input * speed);
+        
     }
 
     public void AbortFence()
@@ -83,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 //Debug.Log("new connection to new");
                 connected = Instantiate(fencePostPre, transform.position, Quaternion.Euler(Vector3.zero));
+                fm.vertices.Add(connected.GetComponent<FencePost>());
             }
             sketch = Instantiate(fenceSketchPre);
             sketch.GetComponent<Fence>().followPlayer = gameObject;
@@ -101,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 //Debug.Log("continue connection to existing");
                 connected = null;
-                fence.GetComponent<Fence>().Stretch(oldPost.transform.position, result[0].transform.position);
+                fence.GetComponent<Fence>().Stretch(oldPost, result[0].gameObject);
                 
                 result[0].GetComponent<FencePost>().connectedFences.Add(fence);
             }
@@ -109,13 +112,12 @@ public class PlayerMovement : MonoBehaviour
             {
                 //Debug.Log("contine connection to new");
                 connected = Instantiate(fencePostPre, transform.position, Quaternion.Euler(Vector3.zero));
-                fence.GetComponent<Fence>().Stretch(oldPost.transform.position, connected.transform.position);
+                fm.vertices.Add(connected.GetComponent<FencePost>());
+                fence.GetComponent<Fence>().Stretch(oldPost, connected);
                 sketch = Instantiate(fenceSketchPre);
                 sketch.GetComponent<Fence>().followPlayer = gameObject;
                 sketch.GetComponent<Fence>().followOldPost = connected;
-                Debug.Log(connected.GetComponent<FencePost>().connectedFences.Count);
                 connected.GetComponent<FencePost>().connectedFences.Add(fence);
-                Debug.Log(connected.GetComponent<FencePost>().connectedFences.Count);
             }
         }
     }

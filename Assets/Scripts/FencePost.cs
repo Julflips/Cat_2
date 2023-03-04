@@ -17,4 +17,29 @@ public class FencePost : MonoBehaviour
     {
         
     }
+
+    public List<FencePost> GetNeighbours()
+    {
+        List<FencePost> result = new List<FencePost>();
+        foreach (GameObject go in connectedFences)
+        {
+            FencePost other;
+            Fence fence = go.GetComponent<Fence>();
+            if(fence.post1 != this)
+            {
+                other = fence.post1;
+            }
+            else if(fence.post2 != this)
+            {
+                other = fence.post2;
+            }
+            else
+            {
+                Debug.Log("ERROR Inconsistent graph state");
+                return null;
+            }
+            result.Add(other);
+        }
+        return result;
+    }
 }

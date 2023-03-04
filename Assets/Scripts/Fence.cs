@@ -8,6 +8,9 @@ public class Fence : MonoBehaviour
     public GameObject followOldPost;
     public GameObject followPlayer;
 
+    public FencePost post1;
+    public FencePost post2;
+
 
     private LayerMask noBullshit;
 
@@ -24,13 +27,17 @@ public class Fence : MonoBehaviour
     {
         if (followOldPost && followPlayer)
         {
-            Stretch(followOldPost.transform.position, followPlayer.transform.position);
+            Stretch(followOldPost, followPlayer);
         }
         
     }
 
-    public void Stretch(Vector2 a, Vector2 b)
+    public void Stretch(GameObject p1, GameObject p2)
     {
+        Vector2 a = p1.transform.position;
+        Vector2 b = p2.transform.position;
+        post1 = p1.GetComponent<FencePost>();
+        post2 = p2.GetComponent<FencePost>();
 
         if (a.Equals(b))
         {
