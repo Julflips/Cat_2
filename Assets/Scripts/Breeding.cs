@@ -32,6 +32,7 @@ public class Breeding : MonoBehaviour
     public GameObject player;
     public List<GameObject> prefabCats;
     public Transform coolCatPodest;
+    public GameObject podest;
 
     private List<GameObject> cage1 = new List<GameObject>();
     private List<GameObject> cage2 = new List<GameObject>();
@@ -49,6 +50,7 @@ public class Breeding : MonoBehaviour
 
     private void Start()
     {
+        podest.SetActive(false);
         expensiveCats = new List<int>{Random.Range(0,catPrices.Count), Random.Range(0,catPrices.Count), Random.Range(0,catPrices.Count)};
         int offset = 2;
         int tempOffest = 0;
@@ -58,7 +60,7 @@ public class Breeding : MonoBehaviour
             tempCat.GetComponent<CatBehaviour>().player = player;
             tempCat.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             tempCat.transform.position = coolCatPodest.position;
-            tempCat.transform.position += Vector3.right * tempOffest;
+            tempCat.transform.position += Vector3.down * tempOffest;
             //Debug.Log("cat at: " + tempCat.transform.position);
             realExpensiveCats.Add(tempCat);
             tempOffest += offset;
@@ -76,12 +78,17 @@ public class Breeding : MonoBehaviour
         //{
             //cat.SetActive(false);
         //}
+        foreach (GameObject cat in realExpensiveCats)
+        {
+            cat.SetActive(true);
+        }
         player.SetActive(false);
         breedUI.SetActive(true);
         mainCamera.SetActive(false);
         breedCamera.SetActive(true);
         playMap.SetActive(false);
         breedingMap.SetActive(true);
+        podest.SetActive(true);
         cats = caughtCats;
         phase1.SetActive(true);
         phase2.SetActive(false);
@@ -233,5 +240,6 @@ public class Breeding : MonoBehaviour
         breedCamera.SetActive(false);
         playMap.SetActive(true);
         breedingMap.SetActive(false);
+        podest.SetActive(false);
     }
 }
