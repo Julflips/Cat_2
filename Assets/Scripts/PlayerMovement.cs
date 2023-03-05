@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private ContactFilter2D postFilter;
     public AudioSource high;
     public AudioSource low;
+    public AudioSource music;
 
     private Vector2 input;
 
@@ -53,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        music.Play();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
@@ -74,6 +76,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (catManager.GetComponent<CatManager>().gameEnded)
+        {
+            return;
+        }
         strFood.text = "Food: " + foodRemaining;
         strPosts.text = "Posts: " + fencePostsLeft;
         input.x = Input.GetAxisRaw("Horizontal");
@@ -88,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Place"))
         {
-            playFenceSound();
+            
             PlaceFence();
         }
         if (Input.GetButtonDown("Abort"))
@@ -115,7 +121,6 @@ public class PlayerMovement : MonoBehaviour
         {
             if (throwTarget && !throwAborted)
             {
-                playFenceSound();
                 ThrowFence(throwTarget.transform.position);
                 Destroy(throwTarget);
                 throwTarget = null;
@@ -220,6 +225,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     return;
                 }
+                playFenceSound();
                 //Debug.Log("new connection to new");
                 connected = Instantiate(fencePostPre, transform.position, Quaternion.Euler(Vector3.zero));
                 fencePostsLeft--;
@@ -267,6 +273,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 connected = Instantiate(fencePostPre, transform.position, Quaternion.Euler(Vector3.zero));
                 fencePostsLeft--;
+                playFenceSound();
                 fm.vertices.Add(connected.GetComponent<FencePost>());
                 fence.GetComponent<Fence>().Stretch(oldPost, connected);
                 sketch = Instantiate(fenceSketchPre);
@@ -310,6 +317,7 @@ public class PlayerMovement : MonoBehaviour
                 fencePostsLeft = pfStart;
                 return;
             }
+            playFenceSound();
             fm.vertices.Add(post2.GetComponent<FencePost>());
             GameObject fence = Instantiate(fencePre);
             fence.GetComponent<Fence>().Stretch(post1, post2);
@@ -331,6 +339,7 @@ public class PlayerMovement : MonoBehaviour
                 fencePostsLeft = pfStart;
                 return;
             }
+            playFenceSound();
             fm.vertices.Add(post1.GetComponent<FencePost>());
             fm.vertices.Add(post2.GetComponent<FencePost>());
             GameObject fence = Instantiate(fencePre);

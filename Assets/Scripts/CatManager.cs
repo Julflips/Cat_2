@@ -21,11 +21,12 @@ public class CatManager : MonoBehaviour
     public List<GameObject> foods;
     public TextMeshProUGUI strCats;
     public GameObject gameUI;
+    public AudioSource winSound;
     
     private int capturedCats;
     private float timeValue = 0;
     private Vector2 offset = new Vector2(3, 4);
-    private bool gameEnded = false;
+    public bool gameEnded = false;
 
 
     void Start()
@@ -78,6 +79,7 @@ public class CatManager : MonoBehaviour
     {
         if (i == 0)
         {
+            winSound.Play();
             gameEnded = true;
             float endtime = timeValue;
             float minutes = Mathf.FloorToInt(endtime / 60);
