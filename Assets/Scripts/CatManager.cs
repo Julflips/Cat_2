@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CatManager : MonoBehaviour
 {
@@ -13,20 +14,18 @@ public class CatManager : MonoBehaviour
     public GameObject player;
     public List<GameObject> cats;
     public TextMeshProUGUI timer;
-    public int time;
     public GameObject fenceManager;
     public List<FencePost> posts;
     public GameObject endScreen;
     public TextMeshProUGUI points;
     
-    private float timeValue;
+    private float timeValue = 0;
     private bool freezeTime = false;
 
 
     void Start()
     {
         posts = fenceManager.GetComponent<FenceManager>().vertices;
-        timeValue = time;
         //Spawn cats around 0 in a areaX times areaY zone
         for (int i = 0; i < numberOfCats; i++)
         {
@@ -40,16 +39,7 @@ public class CatManager : MonoBehaviour
 
     public void newRound()
     {
-        cats = new List<GameObject>();
-        for (int i = 0; i < numberOfCats; i++)
-        {
-            int randomcat = Random.Range(0, prefabCats.Count);
-            GameObject tempCat = Instantiate(prefabCats[randomcat], getRandomPos(areaX, areaY), Quaternion.identity);
-            tempCat.GetComponent<CatBehaviour>().player = player;
-            cats.Add(tempCat);
-        }
-        endScreen.SetActive(false);
-        player.transform.position = new Vector3();
+        SceneManager.LoadScene("UwU");
     }
 
     private Vector2 getRandomPos(int x, int y)
@@ -59,19 +49,7 @@ public class CatManager : MonoBehaviour
 
     private void Update()
     {
-        if (timeValue > 0)
-        {
-            if (!freezeTime)
-            {
-                timeValue -= Time.deltaTime;
-            }
-        }
-        else
-        {
-            timeValue = time;
-            freezeTime = true;
-            endGame();
-        }
+        timeValue += Time.deltaTime;
 
         float minutes = Mathf.FloorToInt(timeValue / 60);
         float seconds = Mathf.FloorToInt(timeValue % 60);
@@ -81,6 +59,8 @@ public class CatManager : MonoBehaviour
 
     public void endGame()
     {
+        float endtime = timeValue;
+        timer.enabled = false;
         endScreen.SetActive(true);
         int p = fenceManager.GetComponent<FenceManager>().capturedCats.Count;
         if (p == 0)
