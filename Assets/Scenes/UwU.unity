@@ -6392,7 +6392,7 @@ MonoBehaviour:
   coolCatPodest: {fileID: 1133208820}
   podest: {fileID: 1910771145}
   timer: {fileID: 2031871085}
-  time: 10
+  time: 90
 --- !u!1 &1133208819
 GameObject:
   m_ObjectHideFlags: 0
