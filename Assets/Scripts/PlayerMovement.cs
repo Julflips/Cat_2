@@ -136,6 +136,7 @@ public class PlayerMovement : MonoBehaviour
         GameObject food = Instantiate(foodPre, transform.position+(v.normalized), Quaternion.Euler(Vector3.zero));
         food.GetComponent<Fish>().catManager = catManager;
         food.GetComponent<Rigidbody2D>().AddForce(v * foodThrowStrenght);
+        foods.Add(food);
         foodRemaining--;
     }
 
