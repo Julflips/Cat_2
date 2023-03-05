@@ -102,8 +102,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   moveCooldown: 3
-  strength: 800
-  playerDetectionRange: 10
+  strength: 1000
+  playerDetectionRange: 6
   fenceDetectionRange: 5
   playerWeight: 1
   foodDetectionRange: 10
@@ -113,6 +113,8 @@ MonoBehaviour:
   zoomieLength: 5
   zoomieStregth: 1500
   type: 4
+  fenceManager: {fileID: 0}
+  posts: []
 --- !u!50 &1618015647489859713
 Rigidbody2D:
   serializedVersion: 4
@@ -126,7 +128,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 2
+  m_LinearDrag: 15
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
