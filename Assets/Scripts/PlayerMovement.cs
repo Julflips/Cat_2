@@ -28,7 +28,15 @@ public class PlayerMovement : MonoBehaviour
     public float maxFenceLength = 3.5f;
     public int fencePostsLeft = 20;
 
+    public int foodRemaining = 5;
+    public float foodThrowStrenght = 0.1f;
+    public GameObject foodPre;
+    public List<GameObject> foods;
+    public GameObject catManager;
+
     private Animator animator;
+
+    private bool throwAborted;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +48,8 @@ public class PlayerMovement : MonoBehaviour
         postFilter = new ContactFilter2D();
         postFilter.SetLayerMask(LayerMask.GetMask("FencePost"));
         connected = null;
+        foods = new List<GameObject>();
+        throwAborted = false;
     }
 
     void FixedUpdate()
@@ -62,27 +72,41 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Place"))
         {
-            if (!throwTarget)
-            {
-                PlaceFence();
-            }
-            else
-            {
-                AbortFence();
-                ThrowFence(throwTarget.transform.position);
-            }
+
+            PlaceFence();
         }
         if (Input.GetButtonDown("Abort"))
         {
+            throwAborted = true;
             AbortFence();
+            Destroy(throwTarget);
+            throwTarget = null;
+        }
+        if (Input.GetButtonDown("Fire1"))
+        {
+            throwAborted = false;
         }
         if (Input.GetButton("Fire1"))
         {
-            UpdateTarget();
+            if (!throwAborted)
+            {
+                AbortFence();
+                UpdateTarget();
+            }
+            
         }
         if (Input.GetButtonUp("Fire1"))
         {
-            Destroy(throwTarget);
+            if (throwTarget && !throwAborted)
+            {
+                ThrowFence(throwTarget.transform.position);
+                Destroy(throwTarget);
+                throwTarget = null;
+            }
+        }
+        if (Input.GetButtonDown("Fire2"))
+        {
+            ThrowFood();
         }
 
         if (connected)
@@ -96,6 +120,23 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void ThrowFood()
+    {
+        if(foodRemaining<1)
+        {
+            return;
+        }
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = Camera.main.nearClipPlane;
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(mousePos);
+        mousePosition.z = 0;
+        Vector3 v = (mousePosition - transform.position);
+        GameObject food = Instantiate(foodPre, transform.position+(v.normalized), Quaternion.Euler(Vector3.zero));
+        food.GetComponent<Fish>().catManager = catManager;
+        food.GetComponent<Rigidbody2D>().AddForce(v * foodThrowStrenght);
+        foodRemaining--;
     }
 
     private void UpdateTarget()

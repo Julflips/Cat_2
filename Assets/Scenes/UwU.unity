@@ -2873,6 +2873,11 @@ MonoBehaviour:
   FenceManager: {fileID: 1221178531}
   maxFenceLength: 3.5
   fencePostsLeft: 20
+  foodRemaining: 5
+  foodThrowStrenght: 0.1
+  foodPre: {fileID: 6742605017043194573, guid: 09faf287965d241b7acad967845285f0, type: 3}
+  foods: []
+  catManager: {fileID: 963888189}
 --- !u!212 &124559050
 SpriteRenderer:
   m_ObjectHideFlags: 0
