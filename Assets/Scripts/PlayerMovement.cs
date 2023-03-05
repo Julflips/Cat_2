@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -33,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
     public GameObject foodPre;
     public List<GameObject> foods;
     public GameObject catManager;
+    public TextMeshProUGUI strFood;
+    public TextMeshProUGUI strPosts;
 
     private Animator animator;
 
@@ -69,6 +72,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        strFood.text = "Food: " + foodRemaining;
+        strPosts.text = "Posts: " + fencePostsLeft;
         input.x = Input.GetAxisRaw("Horizontal");
         input.y = Input.GetAxisRaw("Vertical");
         if (input.magnitude > 1){
