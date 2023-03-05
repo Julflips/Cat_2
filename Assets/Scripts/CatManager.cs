@@ -72,7 +72,7 @@ public class CatManager : MonoBehaviour
         float minutes = Mathf.FloorToInt(timeValue / 60);
         float seconds = Mathf.FloorToInt(timeValue % 60);
 
-        timer.text = string.Format("Time: {0:00}:{1:00}", minutes, seconds);
+        timer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     public void endGame(int i)
