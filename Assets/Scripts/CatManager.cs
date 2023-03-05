@@ -21,7 +21,6 @@ public class CatManager : MonoBehaviour
     public List<GameObject> foods;
 
     private float timeValue = 0;
-    private bool freezeTime = false;
 
 
     void Start()
