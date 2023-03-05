@@ -23,6 +23,7 @@ public class CatManager : MonoBehaviour
     public GameObject gameUI;
     public AudioSource winSound;
     public GameObject credits;
+    public AudioSource eating;
     
     private int capturedCats;
     private float timeValue = 0;
@@ -95,5 +96,10 @@ public class CatManager : MonoBehaviour
     {
         credits.SetActive(!credits.activeSelf); 
         endScreen.SetActive(!endScreen.activeSelf);
+    }
+
+    public void eat()
+    {
+        eating.Play();
     }
 }

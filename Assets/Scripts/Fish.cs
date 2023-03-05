@@ -11,6 +11,7 @@ public class Fish : MonoBehaviour
         //Debug.Log("Fibsh");
         if (other.gameObject.layer.ToString() == "9")
         {
+            catManager.GetComponent<CatManager>().eat();
             catManager.GetComponent<CatManager>().foods.Remove(gameObject);
             Destroy(gameObject);
         }
