@@ -1520,8 +1520,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95632ab4cda58c5469690d337ddace03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  high: {fileID: 0}
-  low: {fileID: 0}
+  high: {fileID: 582745855}
+  low: {fileID: 896660439}
   targetPre: {fileID: 9202353600872570307, guid: 87d1da6d508689045953c40545cb5fbd, type: 3}
   speed: 20
   fencePostPre: {fileID: 3937546642311072073, guid: ece59cbd10caf5942b9fc98918731384, type: 3}
