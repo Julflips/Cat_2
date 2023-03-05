@@ -38,6 +38,13 @@ public class PlayerMovement : MonoBehaviour
 
     private bool throwAborted;
 
+    public float timeToRecoverFood = 10f;
+    public float timeToRecoverFence = 10f;
+
+    private float timeLastFood;
+    private float timeLastFence;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
         connected = null;
         foods = new List<GameObject>();
         throwAborted = false;
+        timeLastFence = Time.time;
+        timeLastFood = Time.time;
     }
 
     void FixedUpdate()
@@ -119,6 +128,17 @@ public class PlayerMovement : MonoBehaviour
                     AbortFence();
                 }
             }
+        }
+
+        if(timeLastFence + timeToRecoverFence < Time.time)
+        {
+            timeLastFence = Time.time;
+            fencePostsLeft++; 
+        }
+        if (timeLastFood + timeToRecoverFood < Time.time)
+        {
+            timeLastFood = Time.time;
+            foodRemaining++;
         }
     }
 
