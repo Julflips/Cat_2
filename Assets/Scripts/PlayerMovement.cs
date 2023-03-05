@@ -13,6 +13,9 @@ public class PlayerMovement : MonoBehaviour
     private GameObject connected;
     private GameObject sketch;
 
+    public GameObject targetPre;
+    private GameObject throwTarget;
+
     public float speed;
 
     public GameObject fencePostPre;
@@ -59,11 +62,27 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Place"))
         {
-            PlaceFence();
+            if (!throwTarget)
+            {
+                PlaceFence();
+            }
+            else
+            {
+                AbortFence();
+                ThrowFence(throwTarget.transform.position);
+            }
         }
         if (Input.GetButtonDown("Abort"))
         {
             AbortFence();
+        }
+        if (Input.GetButton("Fire1"))
+        {
+            UpdateTarget();
+        }
+        if (Input.GetButtonUp("Fire1"))
+        {
+            Destroy(throwTarget);
         }
 
         if (connected)
@@ -77,6 +96,33 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void UpdateTarget()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = Camera.main.nearClipPlane;
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(mousePos);
+        mousePosition.z = 0;
+        Vector3 v = (mousePosition - transform.position);
+        float distance = Mathf.Clamp(v.magnitude, 0.2f, maxFenceLength);
+        RaycastHit2D[] result = new RaycastHit2D[1];
+        int hit = col.Raycast(v.normalized, result, distance, layerMask:~LayerMask.GetMask("FencePost"));
+        Vector3 pos;
+        if (hit == 0)
+        {
+            pos = transform.position + (v.normalized * distance);
+        }
+        else
+        {
+            pos = transform.position + (v.normalized * (result[0].distance - 0.2f));
+        }
+        if (!throwTarget)
+        {
+            throwTarget = Instantiate(targetPre, transform);
+        }
+        throwTarget.transform.position = pos;
+
     }
 
     public void AbortFence()
@@ -161,6 +207,70 @@ public class PlayerMovement : MonoBehaviour
                 fm.UpdateCats();
             }
         }
+    }
+
+    private GameObject GetOrCreateRemoteFence(Vector3 position)
+    {
+        GameObject fencePost = Instantiate(fencePostPre, position, Quaternion.Euler(Vector3.zero));
+        Collider2D[] result = new Collider2D[1];
+        if (fencePost.GetComponent<CircleCollider2D>().OverlapCollider(postFilter, result) > 0)
+        {
+            Destroy(fencePost);
+            return result[0].gameObject;
+        }
+        else
+        {
+            fencePostsLeft--;
+            return fencePost;
+        }
+    }
+
+    private void ThrowFence(Vector3 targetPos)
+    {
+        Collider2D[] result = new Collider2D[1];
+        if (col.OverlapCollider(postFilter, result) > 0)
+        {
+            //Debug.Log("throwing from existing post");
+            int pfStart = fencePostsLeft;
+            GameObject post1 = result[0].gameObject;
+            GameObject post2 = GetOrCreateRemoteFence(targetPos);
+            if (fencePostsLeft < 0)
+            {
+                Destroy(post2);
+                fencePostsLeft = pfStart;
+                return;
+            }
+            fm.vertices.Add(post2.GetComponent<FencePost>());
+            GameObject fence = Instantiate(fencePre);
+            fence.GetComponent<Fence>().Stretch(post1, post2);
+            post1.GetComponent<FencePost>().connectedFences.Add(fence);
+            post2.GetComponent<FencePost>().connectedFences.Add(fence);
+        }
+        else
+        {
+
+            //Debug.Log("throwing from new post");
+            int pfStart = fencePostsLeft;
+            GameObject post1 = Instantiate(fencePostPre, transform.position, Quaternion.Euler(Vector3.zero));
+            fencePostsLeft--;
+            GameObject post2 = GetOrCreateRemoteFence(targetPos);
+            if (fencePostsLeft < 0)
+            {
+                Destroy(post1);
+                Destroy(post2);
+                fencePostsLeft = pfStart;
+                return;
+            }
+            fm.vertices.Add(post1.GetComponent<FencePost>());
+            fm.vertices.Add(post2.GetComponent<FencePost>());
+            GameObject fence = Instantiate(fencePre);
+            fence.GetComponent<Fence>().Stretch(post1, post2);
+            post1.GetComponent<FencePost>().connectedFences.Add(fence);
+            post2.GetComponent<FencePost>().connectedFences.Add(fence);
+
+        }
+        fm.UpdateCats();
+
     }
 
 

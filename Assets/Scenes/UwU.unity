@@ -2865,6 +2865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95632ab4cda58c5469690d337ddace03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPre: {fileID: 9202353600872570307, guid: 87d1da6d508689045953c40545cb5fbd, type: 3}
   speed: 20
   fencePostPre: {fileID: 3937546642311072073, guid: ece59cbd10caf5942b9fc98918731384, type: 3}
   fencePre: {fileID: 4679394502053288805, guid: 412c6c1b97ce9634ea0c8242558e8693, type: 3}
@@ -67038,9 +67039,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ca83b4ff8aa8e246b97ca0e26bc049f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  areaX: 10
-  areaY: 10
-  numberOfCats: 10
+  areaX: 80
+  areaY: 40
+  numberOfCats: 30
   prefabCats:
   - {fileID: 2028202310020884654, guid: d6880c1557c2aea4792f481388d77322, type: 3}
   - {fileID: 2028202310020884654, guid: 7bac82db1b56356449b207b3a77182f7, type: 3}
@@ -67049,6 +67050,10 @@ MonoBehaviour:
   - {fileID: 2028202310020884654, guid: b1533070fc19ded478ecfb6d0ea50e0a, type: 3}
   player: {fileID: 124559045}
   cats: []
+  timer: {fileID: 2031871085}
+  time: 15
+  fenceManager: {fileID: 1221178531}
+  posts: []
 --- !u!4 &963888191
 Transform:
   m_ObjectHideFlags: 0
@@ -67104,8 +67109,8 @@ MonoBehaviour:
   - {fileID: 2028202310020884654, guid: b1533070fc19ded478ecfb6d0ea50e0a, type: 3}
   coolCatPodest: {fileID: 1133208820}
   podest: {fileID: 1910771145}
-  timer: {fileID: 2031871085}
-  time: 90
+  fenceManager: {fileID: 1221178531}
+  aktCat: {fileID: 0}
 --- !u!1 &1133208819
 GameObject:
   m_ObjectHideFlags: 0
@@ -126804,7 +126809,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1910771146
 RectTransform:
   m_ObjectHideFlags: 0
@@ -127082,7 +127087,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -795, y: 420}
+  m_AnchoredPosition: {x: -793, y: 360}
   m_SizeDelta: {x: 291.207, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2031871085

@@ -19,10 +19,11 @@ public class CatBehaviour : MonoBehaviour
     public int zoomieLength;
     public int zoomieStregth;
     public int type;
+    public GameObject fenceManager;
 
     private float lastTimeMoved = 0;
     private Rigidbody2D rigi;
-    private List<Vector2> posts = new List<Vector2>();
+    public List<FencePost> posts;
     private List<Vector2> foods = new List<Vector2>();
     private bool getFood = false;
     private Vector2 food;
@@ -30,7 +31,7 @@ public class CatBehaviour : MonoBehaviour
     private float lastTimeEvented = 0;
     private bool zoomin = false;
     private int zoomed = 0;
-    private bool sitting;
+    private bool sitting = false;
     private float startedSitting;
 
     private bool walking;
@@ -87,6 +88,10 @@ public class CatBehaviour : MonoBehaviour
         {
             sitting = false;
             rigi.bodyType = RigidbodyType2D.Dynamic;
+        }
+        if (rigi.bodyType == RigidbodyType2D.Static)
+        {
+            return;
         }
         if (Time.timeSinceLevelLoad - lastTimeEvented >= eventCheck)
         {
@@ -148,8 +153,9 @@ public class CatBehaviour : MonoBehaviour
                 {
                     //walk away from player
                     direction = (player.transform.position - transform.position) * playerWeight;
-                    foreach (Vector2 vec in posts)
+                    foreach (FencePost post in posts)
                     {
+                        Vector2 vec = post.gameObject.transform.position;
                         if (Vector2.Distance(vec, transform.position) <= fenceDetectionRange)
                         {
                             direction += vec;
@@ -179,20 +185,5 @@ public class CatBehaviour : MonoBehaviour
             }
         }
         
-    }
-
-    public void addPost(Vector2 pos)
-    {
-        posts.Add(pos);
-    }
-
-    public void addFood(Vector2 pos)
-    {
-        foods.Add(pos);
-    }
-
-    public void delFood(Vector2 pos)
-    {
-        foods.Remove(pos);
     }
 }
