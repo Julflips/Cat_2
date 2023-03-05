@@ -88,8 +88,8 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        strFood.text = "Food: " + foodRemaining;
-        strPosts.text = "Posts: " + fencePostsLeft;
+        strFood.text = "Food:   " + foodRemaining;
+        strPosts.text = "Posts:  " + fencePostsLeft;
         input.x = Input.GetAxisRaw("Horizontal");
         input.y = Input.GetAxisRaw("Vertical");
         if (input.magnitude > 1){

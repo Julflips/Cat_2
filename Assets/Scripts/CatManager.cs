@@ -66,7 +66,7 @@ public class CatManager : MonoBehaviour
         {
             endGame(0);
         }
-        strCats.text = "Captured Cats: " + capturedCats + "/" + numberOfCats;
+        strCats.text = "Cats:   " + capturedCats + "/" + numberOfCats;
         timeValue += Time.deltaTime;
 
         float minutes = Mathf.FloorToInt(timeValue / 60);
