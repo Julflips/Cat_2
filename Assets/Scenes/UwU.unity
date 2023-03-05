@@ -7366,7 +7366,7 @@ MonoBehaviour:
   foods: []
   strCats: {fileID: 1055023827}
   gameUI: {fileID: 86171571}
-  winSound: {fileID: 0}
+  winSound: {fileID: 1530362472}
   gameEnded: 0
 --- !u!4 &963888191
 Transform:
@@ -129298,7 +129298,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 68, y: -11}
+  m_AnchoredPosition: {x: 20, y: -33}
   m_SizeDelta: {x: 291.207, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2031871085
@@ -129348,8 +129348,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 90
+  m_fontSizeBase: 90
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
