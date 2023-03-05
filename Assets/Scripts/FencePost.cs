@@ -36,7 +36,7 @@ public class FencePost : MonoBehaviour
             else
             {
                 Debug.Log("ERROR Inconsistent graph state");
-                return null;
+                continue;
             }
             result.Add(other);
         }

@@ -50,6 +50,12 @@ public class PlayerMovement : MonoBehaviour
     private float timeLastFood;
     private float timeLastFence;
 
+    public float ghostTime = 0.5f;
+    public float ghostDash = 5;
+    public float ghostTimeout = 5;
+    private float ghostStart;
+    private bool ghosted;
+
 
     // Start is called before the first frame update
     void Start()
@@ -66,6 +72,8 @@ public class PlayerMovement : MonoBehaviour
         throwAborted = false;
         timeLastFence = Time.time;
         timeLastFood = Time.time;
+        ghostStart = Time.time;
+        ghosted = false;
     }
 
     void FixedUpdate()
@@ -153,6 +161,36 @@ public class PlayerMovement : MonoBehaviour
             timeLastFood = Time.time;
             foodRemaining++;
         }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            Debug.Log("YE");
+            if(ghostStart + ghostTime + ghostTimeout < Time.time)
+            {
+                StartGhost();
+            }
+        }
+        if (ghosted)
+        {
+            if(ghostStart + ghostTime < Time.time)
+            {
+                StopGhost();
+            }
+        }
+    }
+
+    private void StartGhost()
+    {
+        ghosted = true;
+        gameObject.layer = 10;
+        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+    }
+
+    private void StopGhost()
+    {
+        ghosted = false;
+        gameObject.layer = 7;
+        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
     }
 
     private void ThrowFood()
@@ -317,8 +355,15 @@ public class PlayerMovement : MonoBehaviour
                 fencePostsLeft = pfStart;
                 return;
             }
+<<<<<<< Updated upstream
             playFenceSound();
             fm.vertices.Add(post2.GetComponent<FencePost>());
+=======
+            if (!fm.vertices.Contains(post2.GetComponent<FencePost>()))
+            {
+                fm.vertices.Add(post2.GetComponent<FencePost>());
+            }
+>>>>>>> Stashed changes
             GameObject fence = Instantiate(fencePre);
             fence.GetComponent<Fence>().Stretch(post1, post2);
             post1.GetComponent<FencePost>().connectedFences.Add(fence);
@@ -341,7 +386,10 @@ public class PlayerMovement : MonoBehaviour
             }
             playFenceSound();
             fm.vertices.Add(post1.GetComponent<FencePost>());
-            fm.vertices.Add(post2.GetComponent<FencePost>());
+            if (!fm.vertices.Contains(post2.GetComponent<FencePost>()))
+            {
+                fm.vertices.Add(post2.GetComponent<FencePost>());
+            }
             GameObject fence = Instantiate(fencePre);
             fence.GetComponent<Fence>().Stretch(post1, post2);
             post1.GetComponent<FencePost>().connectedFences.Add(fence);
