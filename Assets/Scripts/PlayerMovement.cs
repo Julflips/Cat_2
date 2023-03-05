@@ -22,6 +22,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject FenceManager;
     private FenceManager fm;
 
+    public float maxFenceLength = 3.5f;
+    public int fencePostsLeft = 20;
+
     private Animator animator;
 
     // Start is called before the first frame update
@@ -62,6 +65,18 @@ public class PlayerMovement : MonoBehaviour
         {
             AbortFence();
         }
+
+        if (connected)
+        {
+            float distance = (sketch.transform.position - transform.position).magnitude;
+            if (sketch.transform.localScale.y > 0.1f) {
+                //Debug.Log(distance);
+                if (distance > maxFenceLength)
+                {
+                    AbortFence();
+                }
+            }
+        }
     }
 
     public void AbortFence()
@@ -85,8 +100,13 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
+                if (fencePostsLeft < 1)
+                {
+                    return;
+                }
                 //Debug.Log("new connection to new");
                 connected = Instantiate(fencePostPre, transform.position, Quaternion.Euler(Vector3.zero));
+                fencePostsLeft--;
                 fm.vertices.Add(connected.GetComponent<FencePost>());
             }
             sketch = Instantiate(fenceSketchPre);
@@ -118,12 +138,19 @@ public class PlayerMovement : MonoBehaviour
                 else { 
                     //Debug.Log("not connecting to self");
                     Destroy(fence);
+                    fencePostsLeft++;
                 }
             }
             else
             {
                 //Debug.Log("contine connection to new");
+                if (fencePostsLeft < 1)
+                {
+                    Destroy(fence);
+                    return;
+                }
                 connected = Instantiate(fencePostPre, transform.position, Quaternion.Euler(Vector3.zero));
+                fencePostsLeft--;
                 fm.vertices.Add(connected.GetComponent<FencePost>());
                 fence.GetComponent<Fence>().Stretch(oldPost, connected);
                 sketch = Instantiate(fenceSketchPre);
