@@ -21,6 +21,7 @@ public class CatManager : MonoBehaviour
     public List<GameObject> foods;
 
     private float timeValue = 0;
+    private Vector2 offset = new Vector2(3, 4);
 
 
     void Start()
@@ -46,7 +47,7 @@ public class CatManager : MonoBehaviour
 
     private Vector2 getRandomPos(int x, int y)
     {
-        return new Vector2(Random.Range(-x / 2, x / 2), Random.Range(-y/2, y/2));
+        return new Vector2(Random.Range(-x / 2, x / 2), Random.Range(-y/2, y/2)) + offset;
     }
 
     private void Update()
