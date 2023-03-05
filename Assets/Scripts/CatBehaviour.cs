@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CatBehaviour : MonoBehaviour
 {
@@ -37,14 +39,47 @@ public class CatBehaviour : MonoBehaviour
     
 
     private Animator animator;
+    private SpriteRenderer sr;
 
     void Start()
     {
         rigi = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         //Change Sprite according to type
+        sr = GetComponent<SpriteRenderer>();
     }
-    
+
+    private void FixedUpdate()
+    {
+        animator.SetBool("sitting", sitting);
+        animator.SetBool("zoomin", zoomin);
+        if (Mathf.Abs(rigi.velocity.y) > Mathf.Abs(rigi.velocity.x))
+        {
+            animator.SetFloat("vertical_speed", rigi.velocity.y*10000);
+            animator.SetFloat("horizontal_speed", 0);
+            if (rigi.velocity.x * 10000 < 0.01)
+            {
+                sr.flipX = false;
+            } else
+            {
+                sr.flipX = true;
+            }
+        }
+        else
+        {   
+            animator.SetFloat("horizontal_speed", rigi.velocity.x*10000);
+            animator.SetFloat("vertical_speed", 0);
+            if (rigi.velocity.x * 10000 < 0.01)
+            {
+                sr.flipX = false;
+            }
+            else
+            {
+                sr.flipX = true;
+            }
+        }
+    }
+
     void Update()
     {
         //Debug.Log("Zooming: " + zoomin + "   Sitting: " + sitting);
@@ -135,17 +170,6 @@ public class CatBehaviour : MonoBehaviour
             
             lastTimeMoved = Time.timeSinceLevelLoad;
             
-            animator.SetBool("zoomin", zoomin);
-            if (rigi.velocity.y > rigi.velocity.x)
-            {
-                animator.SetFloat("vertical_speed", rigi.velocity.y*10000);
-                animator.SetFloat("horizontal_speed", 0);
-            }
-            else
-            {   
-                animator.SetFloat("horizontal_speed", rigi.velocity.x*10000);
-                animator.SetFloat("vertical_speed", 0);
-            }
         }
         else
         {
