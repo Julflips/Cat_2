@@ -33,27 +33,24 @@ public class Breeding : MonoBehaviour
     public List<GameObject> prefabCats;
     public Transform coolCatPodest;
     public GameObject podest;
-    public TextMeshProUGUI timer;
-    public int time;
+    public GameObject fenceManager;
 
     private List<GameObject> cage1 = new List<GameObject>();
     private List<GameObject> cage2 = new List<GameObject>();
     private List<GameObject> cage3 = new List<GameObject>();
     private int money;
     private List<GameObject> cats;
+    private List<GameObject> allCats;
     private int index = -1;
-    private GameObject aktCat;
+    public GameObject aktCat;
     private int maxCagesize = 4;
     private int cap1;
     private int cap2;
     private int cap3;
     private List<int> catPrices = new List<int>() {1, 2, 3, 4, 5};
     private List<GameObject> realExpensiveCats = new List<GameObject>();
-    private float timeValue;
-
     private void Start()
     {
-        timeValue = time;
         podest.SetActive(false);
         expensiveCats = new List<int>{Random.Range(0,catPrices.Count), Random.Range(0,catPrices.Count), Random.Range(0,catPrices.Count)};
         int offset = 2;
@@ -78,6 +75,10 @@ public class Breeding : MonoBehaviour
 
     public void onStartPhase()
     {
+        return;
+        toggleCages();
+        player.transform.position = new Vector3(1000, 1000, 0);
+        index = -1;
         foreach (GameObject cat in realExpensiveCats)
         {
             cat.SetActive(true);
@@ -89,8 +90,10 @@ public class Breeding : MonoBehaviour
         playMap.SetActive(false);
         breedingMap.SetActive(true);
         podest.SetActive(true);
-        cats = GetComponent<CatManager>().cats;
-        foreach (GameObject cat in cats)
+        allCats = GetComponent<CatManager>().cats;
+        cats = fenceManager.GetComponent<FenceManager>().capturedCats;
+        //cats = allCats;
+        foreach (GameObject cat in allCats)
         {
             cat.SetActive(false);
         }
@@ -113,6 +116,7 @@ public class Breeding : MonoBehaviour
         {
             aktCat = cats[index];
             aktCat.SetActive(true);
+            //Debug.Log("set static");
             aktCat.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             aktCat.transform.position = catPodest.position;
         }
@@ -120,10 +124,12 @@ public class Breeding : MonoBehaviour
 
     public void chooseCage(int cage)
     {
-        //Debug.Log("Cat to cage: " + cage);
+        Debug.Log("Cat to cage: " + cage);
         if (cage == 1)
         {
             aktCat.transform.position = spawn1.position;
+            aktCat.SetActive(true);
+            aktCat.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             cage1.Add(aktCat);
             cap1++;
             strCap1.text = cap1 + "/" + maxCagesize;
@@ -237,6 +243,7 @@ public class Breeding : MonoBehaviour
 
     public void finished()
     {
+        player.transform.position = new Vector3(0, 0, 0);
         player.SetActive(true);
         Debug.Log("Finished");
         breedUI.SetActive(false);
@@ -245,23 +252,29 @@ public class Breeding : MonoBehaviour
         playMap.SetActive(true);
         breedingMap.SetActive(false);
         podest.SetActive(false);
+        foreach (GameObject cat in allCats)
+        {
+            if (!cats.Contains(cat))
+            {
+                Destroy(cat);
+            }
+        }
+        toggleCages();
+        GetComponent<CatManager>().newRound();
     }
 
-    private void Update()
+    private void toggleCages()
     {
-        if (timeValue > 0)
+        foreach (GameObject cat in cage1)
         {
-            timeValue -= Time.deltaTime;
+            if (cat.activeSelf)
+            {
+                cat.SetActive(false);
+            }
+            else
+            {
+                cat.SetActive(true);
+            }
         }
-        else
-        {
-            timeValue = 0;
-            onStartPhase();
-        }
-
-        float minutes = Mathf.FloorToInt(timeValue / 60);
-        float seconds = Mathf.FloorToInt(timeValue % 60);
-
-        timer.text = string.Format("Time: {0:00}:{1:00}", minutes, seconds);
     }
 }

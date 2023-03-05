@@ -30,7 +30,7 @@ public class CatBehaviour : MonoBehaviour
     private float lastTimeEvented = 0;
     private bool zoomin = false;
     private int zoomed = 0;
-    private bool sitting;
+    private bool sitting = false;
     private float startedSitting;
 
     private bool walking;
@@ -82,6 +82,10 @@ public class CatBehaviour : MonoBehaviour
 
     void Update()
     {
+        if (rigi.bodyType == RigidbodyType2D.Static)
+        {
+            return;
+        }
         //Debug.Log("Zooming: " + zoomin + "   Sitting: " + sitting);
         if (sitting && Time.timeSinceLevelLoad - startedSitting >= sittingDuration)
         {

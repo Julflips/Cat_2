@@ -22,7 +22,7 @@ public class FenceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void UpdateCats()

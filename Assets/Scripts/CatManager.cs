@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,9 +12,16 @@ public class CatManager : MonoBehaviour
     public List<GameObject> prefabCats;
     public GameObject player;
     public List<GameObject> cats;
+    public TextMeshProUGUI timer;
+    public int time;
+    
+    private float timeValue;
+    private bool freezeTime = false;
+
 
     void Start()
     {
+        timeValue = time;
         //Spawn cats around 0 in a areaX times areaY zone
         for (int i = 0; i < numberOfCats; i++)
         {
@@ -23,6 +31,18 @@ public class CatManager : MonoBehaviour
             cats.Add(tempCat);
         }
         //test();
+    }
+
+    public void newRound()
+    {
+        cats = new List<GameObject>();
+        for (int i = 0; i < numberOfCats; i++)
+        {
+            int randomcat = Random.Range(0, prefabCats.Count);
+            GameObject tempCat = Instantiate(prefabCats[randomcat], getRandomPos(areaX, areaY), Quaternion.identity);
+            tempCat.GetComponent<CatBehaviour>().player = player;
+            cats.Add(tempCat);
+        }
     }
 
     private void test()
@@ -57,5 +77,27 @@ public class CatManager : MonoBehaviour
         {
             tempCat.GetComponent<CatBehaviour>().addPost(pos);
         }
+    }
+    
+    private void Update()
+    {
+        if (timeValue > 0)
+        {
+            if (!freezeTime)
+            {
+                timeValue -= Time.deltaTime;
+            }
+        }
+        else
+        {
+            timeValue = time;
+            freezeTime = true;
+            //timer end
+        }
+
+        float minutes = Mathf.FloorToInt(timeValue / 60);
+        float seconds = Mathf.FloorToInt(timeValue % 60);
+
+        timer.text = string.Format("Time: {0:00}:{1:00}", minutes, seconds);
     }
 }
