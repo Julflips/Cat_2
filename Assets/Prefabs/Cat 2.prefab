@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.86573315, g: 0.99215686, b: 0.47843137, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -114,6 +114,7 @@ MonoBehaviour:
   zoomieStregth: 1200
   type: 1
   fenceManager: {fileID: 0}
+  foods: []
   posts: []
 --- !u!50 &1618015647489859713
 Rigidbody2D:
@@ -172,7 +173,7 @@ Animator:
   m_GameObject: {fileID: 2028202310020884654}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a89b1099940e444e781028e69b6ab855, type: 2}
+  m_Controller: {fileID: 9100000, guid: 27e47d0b5c9594b78a22c9df63cb302b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

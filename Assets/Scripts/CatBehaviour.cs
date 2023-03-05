@@ -56,28 +56,22 @@ public class CatBehaviour : MonoBehaviour
         animator.SetBool("zoomin", zoomin);
         if (Mathf.Abs(rigi.velocity.y) > Mathf.Abs(rigi.velocity.x))
         {
-            animator.SetFloat("vertical_speed", rigi.velocity.y*10000);
+            Debug.Log("y");
+            Debug.Log(rigi.velocity.y);
+            animator.SetFloat("vertical_speed", rigi.velocity.y*100);
             animator.SetFloat("horizontal_speed", 0);
-            if (rigi.velocity.x * 10000 < 0.01)
-            {
-                sr.flipX = false;
-            } else
-            {
-                sr.flipX = true;
-            }
         }
         else
         {   
-            animator.SetFloat("horizontal_speed", rigi.velocity.x*10000);
+            animator.SetFloat("horizontal_speed", rigi.velocity.x*100);
             animator.SetFloat("vertical_speed", 0);
-            if (rigi.velocity.x * 10000 < 0.01)
-            {
-                sr.flipX = false;
-            }
-            else
-            {
-                sr.flipX = true;
-            }
+        }
+        if (rigi.velocity.x*100 < 0.01)
+        {
+            sr.flipX = false;
+        } else
+        {
+            sr.flipX = true;
         }
     }
 
