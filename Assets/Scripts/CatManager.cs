@@ -14,6 +14,8 @@ public class CatManager : MonoBehaviour
     public List<GameObject> cats;
     public TextMeshProUGUI timer;
     public int time;
+    public GameObject fenceManager;
+    public List<FencePost> posts;
     
     private float timeValue;
     private bool freezeTime = false;
@@ -21,6 +23,7 @@ public class CatManager : MonoBehaviour
 
     void Start()
     {
+        posts = fenceManager.GetComponent<FenceManager>().vertices;
         timeValue = time;
         //Spawn cats around 0 in a areaX times areaY zone
         for (int i = 0; i < numberOfCats; i++)
@@ -28,9 +31,9 @@ public class CatManager : MonoBehaviour
             int randomcat = Random.Range(0, prefabCats.Count);
             GameObject tempCat = Instantiate(prefabCats[randomcat], getRandomPos(areaX, areaY), Quaternion.identity);
             tempCat.GetComponent<CatBehaviour>().player = player;
+            tempCat.GetComponent<CatBehaviour>().posts = posts;
             cats.Add(tempCat);
         }
-        test();
     }
 
     public void newRound()
@@ -45,40 +48,11 @@ public class CatManager : MonoBehaviour
         }
     }
 
-    private void test()
-    {
-        addFood(new Vector2(5, -4));
-    }
-
     private Vector2 getRandomPos(int x, int y)
     {
         return new Vector2(Random.Range(-x / 2, x / 2), Random.Range(-y/2, y/2));
     }
 
-    private void addFood(Vector2 pos)
-    {
-        foreach (GameObject tempCat in cats)
-        {
-            tempCat.GetComponent<CatBehaviour>().addFood(pos);
-        }
-    }
-    
-    public void delFood(Vector2 pos)
-    {
-        foreach (GameObject tempCat in cats)
-        {
-            tempCat.GetComponent<CatBehaviour>().delFood(pos);
-        }
-    }
-    
-    private void addPost(Vector2 pos)
-    {
-        foreach (GameObject tempCat in cats)
-        {
-            tempCat.GetComponent<CatBehaviour>().addPost(pos);
-        }
-    }
-    
     private void Update()
     {
         if (timeValue > 0)

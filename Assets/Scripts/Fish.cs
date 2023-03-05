@@ -10,7 +10,7 @@ public class Fish : MonoBehaviour
     {
         if (other.gameObject.layer.ToString() == "9")
         {
-            catManager.GetComponent<CatManager>().delFood();
+            //catManager.GetComponent<CatManager>().delFood();
             Destroy(gameObject);
         }
     }
