@@ -17,7 +17,7 @@ public class CatBehaviour : MonoBehaviour
     public float sittingProp;
     public int sittingDuration;
     public int zoomieLength;
-    public int zoomieStregth;
+    public float zoomieStregth;
     public int type;
     public GameObject fenceManager;
     public List<GameObject> foods;

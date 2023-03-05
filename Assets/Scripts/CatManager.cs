@@ -19,8 +19,13 @@ public class CatManager : MonoBehaviour
     public GameObject endScreen;
     public TextMeshProUGUI points;
     public List<GameObject> foods;
-
+    public TextMeshProUGUI strCats;
+    public GameObject gameUI;
+    
+    private int capturedCats;
     private float timeValue = 0;
+    private Vector2 offset = new Vector2(3, 4);
+    private bool gameEnded = false;
 
 
     void Start()
@@ -46,11 +51,21 @@ public class CatManager : MonoBehaviour
 
     private Vector2 getRandomPos(int x, int y)
     {
-        return new Vector2(Random.Range(-x / 2, x / 2), Random.Range(-y/2, y/2));
+        return new Vector2(Random.Range(-x / 2, x / 2), Random.Range(-y/2, y/2)) + offset;
     }
 
     private void Update()
     {
+        if (gameEnded)
+        {
+            return;
+        }
+        capturedCats = fenceManager.GetComponent<FenceManager>().capturedCats.Count;
+        if (capturedCats == numberOfCats)
+        {
+            endGame(0);
+        }
+        strCats.text = "Captured Cats: " + capturedCats + "/" + numberOfCats;
         timeValue += Time.deltaTime;
 
         float minutes = Mathf.FloorToInt(timeValue / 60);
@@ -59,26 +74,17 @@ public class CatManager : MonoBehaviour
         timer.text = string.Format("Time: {0:00}:{1:00}", minutes, seconds);
     }
 
-    public void endGame()
+    public void endGame(int i)
     {
-        float endtime = timeValue;
-        timer.enabled = false;
-        endScreen.SetActive(true);
-        int p = fenceManager.GetComponent<FenceManager>().capturedCats.Count;
-        if (p == 0)
+        if (i == 0)
         {
-            points.text = "Lmao you didn't catch a single cat";
-        }
-        else
-        {
-            if (p == 1)
-            {
-                points.text = points.text = "You caught a cat (at least u got one <3)";
-            }
-            else
-            {
-                points.text = "You caught " + p + " cats UwU";
-            }
+            gameEnded = true;
+            float endtime = timeValue;
+            float minutes = Mathf.FloorToInt(endtime / 60);
+            float seconds = Mathf.FloorToInt(endtime % 60);
+            gameUI.SetActive(false);
+            endScreen.SetActive(true);
+            points.text = string.Format("Your time: {0:00}:{1:00}", minutes, seconds);
         }
     }
 }
