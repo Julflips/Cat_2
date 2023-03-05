@@ -22,6 +22,7 @@ public class CatManager : MonoBehaviour
     public TextMeshProUGUI strCats;
     public GameObject gameUI;
     public AudioSource winSound;
+    public GameObject credits;
     
     private int capturedCats;
     private float timeValue = 0;
@@ -88,5 +89,11 @@ public class CatManager : MonoBehaviour
             endScreen.SetActive(true);
             points.text = string.Format("Your time: {0:00}:{1:00}", minutes, seconds);
         }
+    }
+
+    public void toggleCredits()
+    {
+        credits.SetActive(!credits.activeSelf); 
+        endScreen.SetActive(!endScreen.activeSelf);
     }
 }
