@@ -284,6 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95632ab4cda58c5469690d337ddace03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPre: {fileID: 9202353600872570307, guid: 87d1da6d508689045953c40545cb5fbd, type: 3}
   speed: 20
   fencePostPre: {fileID: 3937546642311072073, guid: ece59cbd10caf5942b9fc98918731384, type: 3}
   fencePre: {fileID: 4679394502053288805, guid: 412c6c1b97ce9634ea0c8242558e8693, type: 3}
