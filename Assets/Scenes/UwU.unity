@@ -6330,10 +6330,10 @@ MonoBehaviour:
   numberOfCats: 10
   prefabCats:
   - {fileID: 2028202310020884654, guid: d6880c1557c2aea4792f481388d77322, type: 3}
-  - {fileID: 2028202310020884654, guid: d6880c1557c2aea4792f481388d77322, type: 3}
-  - {fileID: 2028202310020884654, guid: d6880c1557c2aea4792f481388d77322, type: 3}
-  - {fileID: 2028202310020884654, guid: d6880c1557c2aea4792f481388d77322, type: 3}
-  - {fileID: 2028202310020884654, guid: d6880c1557c2aea4792f481388d77322, type: 3}
+  - {fileID: 2028202310020884654, guid: 7bac82db1b56356449b207b3a77182f7, type: 3}
+  - {fileID: 2028202310020884654, guid: 13368a69f5844d748b3350bb2e2d1605, type: 3}
+  - {fileID: 2028202310020884654, guid: 1ac794906b228264b88880fb330eb2be, type: 3}
+  - {fileID: 2028202310020884654, guid: b1533070fc19ded478ecfb6d0ea50e0a, type: 3}
   player: {fileID: 124559045}
   cats: []
 --- !u!4 &963888191
@@ -6390,6 +6390,9 @@ MonoBehaviour:
   - {fileID: 2028202310020884654, guid: 1ac794906b228264b88880fb330eb2be, type: 3}
   - {fileID: 2028202310020884654, guid: b1533070fc19ded478ecfb6d0ea50e0a, type: 3}
   coolCatPodest: {fileID: 1133208820}
+  podest: {fileID: 1910771145}
+  timer: {fileID: 2031871085}
+  time: 90
 --- !u!1 &1133208819
 GameObject:
   m_ObjectHideFlags: 0
@@ -8493,7 +8496,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2031871084
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8511,8 +8514,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -289, y: 154}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -795, y: 420}
+  m_SizeDelta: {x: 291.207, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2031871085
 MonoBehaviour:
@@ -8561,8 +8564,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -8597,7 +8600,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -0.00009160821, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

@@ -33,6 +33,8 @@ public class Breeding : MonoBehaviour
     public List<GameObject> prefabCats;
     public Transform coolCatPodest;
     public GameObject podest;
+    public TextMeshProUGUI timer;
+    public int time;
 
     private List<GameObject> cage1 = new List<GameObject>();
     private List<GameObject> cage2 = new List<GameObject>();
@@ -47,9 +49,11 @@ public class Breeding : MonoBehaviour
     private int cap3;
     private List<int> catPrices = new List<int>() {1, 2, 3, 4, 5};
     private List<GameObject> realExpensiveCats = new List<GameObject>();
+    private float timeValue;
 
     private void Start()
     {
+        timeValue = time;
         podest.SetActive(false);
         expensiveCats = new List<int>{Random.Range(0,catPrices.Count), Random.Range(0,catPrices.Count), Random.Range(0,catPrices.Count)};
         int offset = 2;
@@ -72,12 +76,8 @@ public class Breeding : MonoBehaviour
     }
 
 
-    public void onStartPhase(List<GameObject> caughtCats)
+    public void onStartPhase()
     {
-        //foreach (GameObject cat in caughtCats)
-        //{
-            //cat.SetActive(false);
-        //}
         foreach (GameObject cat in realExpensiveCats)
         {
             cat.SetActive(true);
@@ -89,7 +89,11 @@ public class Breeding : MonoBehaviour
         playMap.SetActive(false);
         breedingMap.SetActive(true);
         podest.SetActive(true);
-        cats = caughtCats;
+        cats = GetComponent<CatManager>().cats;
+        foreach (GameObject cat in cats)
+        {
+            cat.SetActive(false);
+        }
         phase1.SetActive(true);
         phase2.SetActive(false);
         expensiveCats.Add(Random.Range(0,catPrices.Count));
@@ -241,5 +245,23 @@ public class Breeding : MonoBehaviour
         playMap.SetActive(true);
         breedingMap.SetActive(false);
         podest.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (timeValue > 0)
+        {
+            timeValue -= Time.deltaTime;
+        }
+        else
+        {
+            timeValue = 0;
+            onStartPhase();
+        }
+
+        float minutes = Mathf.FloorToInt(timeValue / 60);
+        float seconds = Mathf.FloorToInt(timeValue % 60);
+
+        timer.text = string.Format("Time: {0:00}:{1:00}", minutes, seconds);
     }
 }

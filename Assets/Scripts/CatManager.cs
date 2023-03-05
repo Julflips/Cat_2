@@ -27,11 +27,7 @@ public class CatManager : MonoBehaviour
 
     private void test()
     {
-        foreach (GameObject cat in cats)
-        {
-            cat.SetActive(false);
-        }
-        GetComponent<Breeding>().onStartPhase(cats);
+        GetComponent<Breeding>().onStartPhase();
     }
 
     private Vector2 getRandomPos(int x, int y)
