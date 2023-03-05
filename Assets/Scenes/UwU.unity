@@ -1540,6 +1540,9 @@ MonoBehaviour:
   strPosts: {fileID: 1646946443}
   timeToRecoverFood: 10
   timeToRecoverFence: 5
+  ghostTime: 0.2
+  ghostDash: 2
+  ghostTimeout: 3
 --- !u!212 &124559050
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7363,7 +7366,7 @@ MonoBehaviour:
   foods: []
   strCats: {fileID: 1055023827}
   gameUI: {fileID: 86171571}
-  winSound: {fileID: 1530362472}
+  winSound: {fileID: 0}
   gameEnded: 0
 --- !u!4 &963888191
 Transform:

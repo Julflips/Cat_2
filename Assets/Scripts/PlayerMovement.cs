@@ -50,8 +50,8 @@ public class PlayerMovement : MonoBehaviour
     private float timeLastFood;
     private float timeLastFence;
 
-    public float ghostTime = 0.5f;
-    public float ghostDash = 5;
+    public float ghostTime = 0.3f;
+    public float ghostDash = 3;
     public float ghostTimeout = 5;
     private float ghostStart;
     private bool ghosted;
@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
         throwAborted = false;
         timeLastFence = Time.time;
         timeLastFood = Time.time;
-        ghostStart = Time.time;
+        ghostStart = Time.time - ghostTimeout;
         ghosted = false;
     }
 
@@ -162,11 +162,12 @@ public class PlayerMovement : MonoBehaviour
             foodRemaining++;
         }
 
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire3"))
         {
-            Debug.Log("YE");
+            
             if(ghostStart + ghostTime + ghostTimeout < Time.time)
             {
+                Debug.Log("ghosting");
                 StartGhost();
             }
         }
@@ -182,8 +183,10 @@ public class PlayerMovement : MonoBehaviour
     private void StartGhost()
     {
         ghosted = true;
+        ghostStart = Time.time;
         gameObject.layer = 10;
         GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+        rb.AddForce(input * ghostDash);
     }
 
     private void StopGhost()
