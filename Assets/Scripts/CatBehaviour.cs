@@ -56,8 +56,6 @@ public class CatBehaviour : MonoBehaviour
         animator.SetBool("zoomin", zoomin);
         if (Mathf.Abs(rigi.velocity.y) > Mathf.Abs(rigi.velocity.x))
         {
-            Debug.Log("y");
-            Debug.Log(rigi.velocity.y);
             animator.SetFloat("vertical_speed", rigi.velocity.y*100);
             animator.SetFloat("horizontal_speed", 0);
         }
