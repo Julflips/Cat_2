@@ -18,7 +18,8 @@ public class CatManager : MonoBehaviour
     public List<FencePost> posts;
     public GameObject endScreen;
     public TextMeshProUGUI points;
-    
+    public List<GameObject> foods;
+
     private float timeValue = 0;
     private bool freezeTime = false;
 
@@ -26,6 +27,7 @@ public class CatManager : MonoBehaviour
     void Start()
     {
         posts = fenceManager.GetComponent<FenceManager>().vertices;
+        foods = player.GetComponent<PlayerMovement>().foods;
         //Spawn cats around 0 in a areaX times areaY zone
         for (int i = 0; i < numberOfCats; i++)
         {
@@ -33,6 +35,7 @@ public class CatManager : MonoBehaviour
             GameObject tempCat = Instantiate(prefabCats[randomcat], getRandomPos(areaX, areaY), Quaternion.identity);
             tempCat.GetComponent<CatBehaviour>().player = player;
             tempCat.GetComponent<CatBehaviour>().posts = posts;
+            tempCat.GetComponent<CatBehaviour>().foods = foods;
             cats.Add(tempCat);
         }
     }

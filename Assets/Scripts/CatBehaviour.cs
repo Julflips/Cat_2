@@ -20,11 +20,11 @@ public class CatBehaviour : MonoBehaviour
     public int zoomieStregth;
     public int type;
     public GameObject fenceManager;
+    public List<GameObject> foods;
 
     private float lastTimeMoved = 0;
     private Rigidbody2D rigi;
     public List<FencePost> posts;
-    private List<Vector2> foods = new List<Vector2>();
     private bool getFood = false;
     private Vector2 food;
     private float eventCheck = 0.6f;
@@ -132,8 +132,9 @@ public class CatBehaviour : MonoBehaviour
         if (Time.timeSinceLevelLoad - lastTimeMoved >= moveCooldown && !zoomin && !sitting)
         {
             getFood = false;
-            foreach (Vector2 vec in foods)
+            foreach (GameObject obj in foods)
             {
+                Vector2 vec = obj.transform.position;
                 if (Vector2.Distance(vec, transform.position) <= foodDetectionRange)
                 {
                     getFood = true;
