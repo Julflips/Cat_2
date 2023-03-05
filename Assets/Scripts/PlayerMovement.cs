@@ -355,15 +355,11 @@ public class PlayerMovement : MonoBehaviour
                 fencePostsLeft = pfStart;
                 return;
             }
-<<<<<<< Updated upstream
             playFenceSound();
-            fm.vertices.Add(post2.GetComponent<FencePost>());
-=======
             if (!fm.vertices.Contains(post2.GetComponent<FencePost>()))
             {
                 fm.vertices.Add(post2.GetComponent<FencePost>());
             }
->>>>>>> Stashed changes
             GameObject fence = Instantiate(fencePre);
             fence.GetComponent<Fence>().Stretch(post1, post2);
             post1.GetComponent<FencePost>().connectedFences.Add(fence);
