@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Collider2D col;
     private ContactFilter2D postFilter;
+    public AudioSource high;
+    public AudioSource low;
 
     private Vector2 input;
 
@@ -86,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Place"))
         {
-
+            playFenceSound();
             PlaceFence();
         }
         if (Input.GetButtonDown("Abort"))
@@ -113,6 +115,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (throwTarget && !throwAborted)
             {
+                playFenceSound();
                 ThrowFence(throwTarget.transform.position);
                 Destroy(throwTarget);
                 throwTarget = null;
@@ -340,5 +343,17 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    private void playFenceSound()
+    {
+        if (Random.Range(0, 2) == 0)
+        {
+            high.Play();
+        }
+        else
+        {
+            low.Play();
+        }
+        
+    }
 
 }

@@ -111,7 +111,7 @@ MonoBehaviour:
   sittingProp: 0.1
   sittingDuration: 4
   zoomieLength: 6
-  zoomieStregth: 2
+  zoomieStregth: 1.3
   type: 0
   fenceManager: {fileID: 0}
   foods: []
