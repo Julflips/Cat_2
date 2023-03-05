@@ -139,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
             ThrowFood();
         }
 
-        if (connected)
+        if (connected && sketch)
         {
             float distance = (sketch.transform.position - transform.position).magnitude;
             if (sketch.transform.localScale.y > 0.1f) {
@@ -354,7 +354,11 @@ public class PlayerMovement : MonoBehaviour
             GameObject post2 = GetOrCreateRemoteFence(targetPos);
             if (fencePostsLeft < 0)
             {
-                Destroy(post2);
+                if(pfStart != fencePostsLeft)
+                {
+                    Destroy(post2);
+                }
+                
                 fencePostsLeft = pfStart;
                 return;
             }
@@ -379,7 +383,10 @@ public class PlayerMovement : MonoBehaviour
             if (fencePostsLeft < 0)
             {
                 Destroy(post1);
-                Destroy(post2);
+                if (pfStart-1 != fencePostsLeft)
+                {
+                    Destroy(post2);
+                }
                 fencePostsLeft = pfStart;
                 return;
             }
