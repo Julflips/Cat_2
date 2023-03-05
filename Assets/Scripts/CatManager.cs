@@ -16,6 +16,8 @@ public class CatManager : MonoBehaviour
     public int time;
     public GameObject fenceManager;
     public List<FencePost> posts;
+    public GameObject endScreen;
+    public TextMeshProUGUI points;
     
     private float timeValue;
     private bool freezeTime = false;
@@ -46,6 +48,8 @@ public class CatManager : MonoBehaviour
             tempCat.GetComponent<CatBehaviour>().player = player;
             cats.Add(tempCat);
         }
+        endScreen.SetActive(false);
+        player.transform.position = new Vector3();
     }
 
     private Vector2 getRandomPos(int x, int y)
@@ -66,12 +70,33 @@ public class CatManager : MonoBehaviour
         {
             timeValue = time;
             freezeTime = true;
-            //timer end
+            endGame();
         }
 
         float minutes = Mathf.FloorToInt(timeValue / 60);
         float seconds = Mathf.FloorToInt(timeValue % 60);
 
         timer.text = string.Format("Time: {0:00}:{1:00}", minutes, seconds);
+    }
+
+    public void endGame()
+    {
+        endScreen.SetActive(true);
+        int p = fenceManager.GetComponent<FenceManager>().capturedCats.Count;
+        if (p == 0)
+        {
+            points.text = "Lmao you didn't catch a single cat";
+        }
+        else
+        {
+            if (p == 1)
+            {
+                points.text = points.text = "You caught a cat (at least u got one <3)";
+            }
+            else
+            {
+                points.text = "You caught " + p + " cats UwU";
+            }
+        }
     }
 }
