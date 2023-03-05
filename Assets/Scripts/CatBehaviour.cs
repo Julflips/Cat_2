@@ -82,15 +82,15 @@ public class CatBehaviour : MonoBehaviour
 
     void Update()
     {
-        if (rigi.bodyType == RigidbodyType2D.Static)
-        {
-            return;
-        }
         //Debug.Log("Zooming: " + zoomin + "   Sitting: " + sitting);
         if (sitting && Time.timeSinceLevelLoad - startedSitting >= sittingDuration)
         {
             sitting = false;
             rigi.bodyType = RigidbodyType2D.Dynamic;
+        }
+        if (rigi.bodyType == RigidbodyType2D.Static)
+        {
+            return;
         }
         if (Time.timeSinceLevelLoad - lastTimeEvented >= eventCheck)
         {

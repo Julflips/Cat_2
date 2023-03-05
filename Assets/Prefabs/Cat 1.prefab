@@ -111,7 +111,7 @@ MonoBehaviour:
   sittingProp: 0.1
   sittingDuration: 4
   zoomieLength: 6
-  zoomieStregth: 1700
+  zoomieStregth: 1200
   type: 0
 --- !u!50 &1618015647489859713
 Rigidbody2D:

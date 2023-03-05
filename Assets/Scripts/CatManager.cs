@@ -30,7 +30,7 @@ public class CatManager : MonoBehaviour
             tempCat.GetComponent<CatBehaviour>().player = player;
             cats.Add(tempCat);
         }
-        //test();
+        test();
     }
 
     public void newRound()
@@ -47,7 +47,7 @@ public class CatManager : MonoBehaviour
 
     private void test()
     {
-        GetComponent<Breeding>().onStartPhase();
+        addFood(new Vector2(5, -4));
     }
 
     private Vector2 getRandomPos(int x, int y)
@@ -63,7 +63,7 @@ public class CatManager : MonoBehaviour
         }
     }
     
-    private void delFood(Vector2 pos)
+    public void delFood(Vector2 pos)
     {
         foreach (GameObject tempCat in cats)
         {
