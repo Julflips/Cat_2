@@ -25,9 +25,9 @@ public class Menu : MonoBehaviour
 
     public void onSliderChange()
     {
+        volume = slider.GetComponent<Slider>().value;
         meow.volume = volume;
         music.volume = volume;
         meow.Play();
-        volume = slider.GetComponent<Slider>().value;
     }
 }
