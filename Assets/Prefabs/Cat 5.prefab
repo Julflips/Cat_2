@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7452645682242335957}
   - component: {fileID: 1618015647489859713}
   - component: {fileID: 8526251708803834498}
+  - component: {fileID: -8087682322832001371}
   m_Layer: 9
   m_Name: Cat 5
   m_TagString: Untagged
@@ -100,18 +101,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  moveCooldown: 0.2
-  strength: 50
+  moveCooldown: 3
+  strength: 800
   playerDetectionRange: 10
   fenceDetectionRange: 5
   playerWeight: 1
   foodDetectionRange: 10
-  zoomieProp: 0.5
+  zoomieProp: 0.6
   sittingProp: 0.1
   sittingDuration: 2
   zoomieLength: 5
+  zoomieStregth: 1800
   type: 4
-  animator: {fileID: 0}
 --- !u!50 &1618015647489859713
 Rigidbody2D:
   serializedVersion: 4
@@ -132,7 +133,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &8526251708803834498
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -159,3 +160,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &-8087682322832001371
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028202310020884654}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a89b1099940e444e781028e69b6ab855, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
