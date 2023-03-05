@@ -37,7 +37,14 @@ public class FenceManager : MonoBehaviour
         {
             Collider2D[] results = new Collider2D[100];
             col.OverlapCollider(catFilter, results);
-            cols.AddRange(results);
+            for (int i = 0; i < results.Length; i++)
+            {
+                if (results[i])
+                {
+                    cols.Add(results[i]);
+                }
+                else { break; }
+            }
         }
         List<GameObject> cats = new List<GameObject>();
         foreach (Collider2D col in cols)
@@ -70,7 +77,7 @@ public class FenceManager : MonoBehaviour
     private GameObject createPolygon(List<FencePost> circle)
     {
         
-        Vector2[] points = new Vector2[circle.Count];
+        Vector2[] points = new Vector2[circle.Count + 1];
         Vector3[] positions = new Vector3[circle.Count + 1];
         int i = 0;
         foreach (FencePost p in circle)
@@ -80,6 +87,7 @@ public class FenceManager : MonoBehaviour
             i++;
         }
         positions[circle.Count] = positions[0];
+        points[circle.Count] = points[0];
 
         GameObject go = Instantiate(PolygonPre, transform, true);
         LineRenderer lr = go.GetComponent<LineRenderer>();
